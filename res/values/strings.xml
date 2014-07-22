@@ -1,5 +1,9 @@
 <resources>
 
     <string name="app_name">LouPanGuanLi</string>
+    <string name="lbl_newLP">新建楼盘</string>
+    <string name="lbl_viewLP">查看楼盘</string>
+    <string name="lbl_editLP">编辑楼盘</string>
+    <string name="lbl_deleteLP">删除楼盘</string>
 
 </resources>
