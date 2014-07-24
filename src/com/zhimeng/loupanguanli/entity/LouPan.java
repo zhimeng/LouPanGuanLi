@@ -6,6 +6,7 @@ public class LouPan {
 	private String name;// 楼盘名称
 	private String address;// 楼盘地址
 	private String remark;// 楼盘备注
+	private String picPath;// 图片路径
 
 	public Integer getId() {
 		return id;
@@ -37,6 +38,14 @@ public class LouPan {
 
 	public void setRemark(String remark) {
 		this.remark = remark;
+	}
+
+	public String getPicPath() {
+		return picPath;
+	}
+
+	public void setPicPath(String picPath) {
+		this.picPath = picPath;
 	}
 
 }
