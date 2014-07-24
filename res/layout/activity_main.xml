@@ -1,52 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center" >
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/home_mainlayout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/bg_home"
+    android:orientation="vertical" >
 
-    <TableLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" >
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0.0dip"
+        android:layout_weight="1.0" >
 
-        <TableRow
-            android:id="@+id/tableRow1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+        <ImageView
+            android:id="@+id/home_center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/earth_core" />
 
-            <Button
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:background="#00FFFF"
-                android:text="@string/lbl_newLP" />
+        <ImageView
+            android:id="@+id/home_top"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/home_center"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/cloud_create" />
 
-            <Button
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_marginLeft="5dp"
-                android:background="#00FF00"
-                android:text="@string/lbl_viewLP" />
-        </TableRow>
+        <ImageView
+            android:id="@+id/home_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/home_center"
+            android:src="@drawable/cloud_delete" />
 
-        <TableRow
-            android:id="@+id/tableRow2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+        <ImageView
+            android:id="@+id/home_bottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/home_center"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/cloud_search" />
 
-            <Button
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_marginTop="5dp"
-                android:background="#0000FF"
-                android:text="@string/lbl_editLP" />
+        <ImageView
+            android:id="@+id/home_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/home_center"
+            android:src="@drawable/cloud_update" />
+    </RelativeLayout>
 
-            <Button
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="5dp"
-                android:background="#FF0000"
-                android:text="@string/lbl_deleteLP" />
-        </TableRow>
-    </TableLayout>
-
-</RelativeLayout>
+</LinearLayout>
