@@ -11,6 +11,9 @@ public class LouPan implements Serializable {
 	private String remark;// 楼盘备注
 	private String picPath;// 图片路径
 
+	public LouPan() {
+	}
+
 	public LouPan(String name, String address, String remark, String picPath) {
 		this.name = name;
 		this.address = address;

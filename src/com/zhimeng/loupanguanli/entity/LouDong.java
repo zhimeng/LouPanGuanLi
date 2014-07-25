@@ -2,9 +2,9 @@ package com.zhimeng.loupanguanli.entity;
 
 import java.io.Serializable;
 
-public class LouDong implements Serializable{
+public class LouDong implements Serializable {
 	private static final long serialVersionUID = 964627924285967120L;
-	
+
 	private Integer id;// 楼栋ID
 	private Integer number;// 楼栋编号
 	private String name;// 楼栋名称
@@ -12,8 +12,19 @@ public class LouDong implements Serializable{
 	private Integer sets;// 几套/层
 	private String remark;// 楼栋备注
 	private Integer loupanId;// 对应楼盘ID
-	
-	public LouDong(Integer number,String name,)
+
+	public LouDong() {
+	}
+
+	public LouDong(Integer number, String name, Integer layers, Integer sets,
+			String remark, Integer loupanId) {
+		this.number = number;
+		this.name = name;
+		this.layers = layers;
+		this.sets = sets;
+		this.remark = remark;
+		this.loupanId = loupanId;
+	}
 
 	public Integer getId() {
 		return id;
