@@ -4,6 +4,8 @@ import java.io.File;
 
 import com.zhimeng.loupanguanli.R;
 import com.zhimeng.loupanguanli.config.Config;
+import com.zhimeng.loupanguanli.dao.LouPanDAO;
+import com.zhimeng.loupanguanli.entity.LouPan;
 import com.zhimeng.loupanguanli.util.PhotoRequestUtil;
 import com.zhimeng.loupanguanli.util.StorageUtil;
 import com.zhimeng.loupanguanli.util.UUIDUtil;
@@ -20,7 +22,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-public class CreateActivity extends Activity {
+public class CreateLouPanActivity extends Activity {
 	private Button btnSelectPic;
 	private Spinner spinnerSelectWay;
 	private EditText etName;
@@ -37,7 +39,7 @@ public class CreateActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_create);
+		setContentView(R.layout.activity_create_loupan);
 
 		initViews();
 	}
@@ -60,7 +62,8 @@ public class CreateActivity extends Activity {
 				String ssw = spinnerSelectWay.getSelectedItem().toString();
 				if (ssw.equals(Config.WAY_GALLERY)) {
 					// 选择已有图片
-					PhotoRequestUtil.getPicFromGallery(CreateActivity.this);
+					PhotoRequestUtil
+							.getPicFromGallery(CreateLouPanActivity.this);
 				} else if (ssw.equals(Config.WAY_CAMERA)) {
 					// 拍照
 					if (StorageUtil.isSDCardExisted()) {
@@ -72,10 +75,11 @@ public class CreateActivity extends Activity {
 						}
 						cameraFile = new File(Config.APP_DIR_PATH + "/cache",
 								UUIDUtil.getUStr());
-						PhotoRequestUtil.getPicFromCamera(CreateActivity.this,
+						PhotoRequestUtil.getPicFromCamera(
+								CreateLouPanActivity.this,
 								Uri.fromFile(cameraFile));
 					} else {
-						Toast.makeText(CreateActivity.this, "SDCard不可用",
+						Toast.makeText(CreateLouPanActivity.this, "SDCard不可用",
 								Toast.LENGTH_LONG).show();
 					}
 				}
@@ -87,9 +91,13 @@ public class CreateActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
+				LouPanDAO louPanDao = new LouPanDAO(CreateLouPanActivity.this);
 				String nameStr = etName.getText().toString().trim();
 				if ("".equals(nameStr) || bitmap == null) {
-					Toast.makeText(CreateActivity.this, "图片、楼盘名不能为空",
+					Toast.makeText(CreateLouPanActivity.this, "图片、楼盘名不能为空",
+							Toast.LENGTH_SHORT).show();
+				} else if (louPanDao.isNameExisted(nameStr)) {
+					Toast.makeText(CreateLouPanActivity.this, "楼盘名已存在",
 							Toast.LENGTH_SHORT).show();
 				} else {
 					String picPath = UUIDUtil.getUStr();
@@ -104,9 +112,15 @@ public class CreateActivity extends Activity {
 						}
 						StorageUtil.saveBitmapToSDCard(bitmap,
 								Config.APP_DIR_PATH + "/" + picPath);
+						LouPan louPan = new LouPan(nameStr, addressStr,
+								remarkStr, picPath);
+						louPanDao.insert(louPan);
+						;
+						Intent intent = new Intent(CreateLouPanActivity.this,
+								CreateLouDongActivity.class);
 					} else {
-						Toast.makeText(CreateActivity.this, "保存失败，SDCard不可用",
-								Toast.LENGTH_SHORT).show();
+						Toast.makeText(CreateLouPanActivity.this,
+								"保存失败，SDCard不可用", Toast.LENGTH_SHORT).show();
 					}
 				}
 
@@ -118,7 +132,7 @@ public class CreateActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				CreateActivity.this.finish();
+				CreateLouPanActivity.this.finish();
 			}
 		});
 
@@ -129,11 +143,12 @@ public class CreateActivity extends Activity {
 		switch (requestCode) {
 		case PhotoRequestUtil.PHOTO_REQUEST_GALLERY:
 			if (data != null)
-				PhotoRequestUtil.cropPic(data.getData(), CreateActivity.this);
+				PhotoRequestUtil.cropPic(data.getData(),
+						CreateLouPanActivity.this);
 			break;
 		case PhotoRequestUtil.PHOTO_REQUEST_CAREMA:
 			PhotoRequestUtil.cropPic(Uri.fromFile(cameraFile),
-					CreateActivity.this);
+					CreateLouPanActivity.this);
 			break;
 		case PhotoRequestUtil.PHOTO_REQUEST_CUT:
 			if (data != null) {
