@@ -1,11 +1,25 @@
 package com.zhimeng.loupanguanli.entity;
 
-public class ZuoBiao {
+import java.io.Serializable;
+
+public class ZuoBiao implements Serializable {
+	private static final long serialVersionUID = 4003871646645991533L;
+
 	private Integer id;
 	private Integer x;
 	private Integer y;
 	private Integer loupanId;
 	private Integer loudongId;
+
+	public ZuoBiao() {
+	}
+
+	public ZuoBiao(Integer x, Integer y, Integer loupanId, Integer loudongId) {
+		this.x = x;
+		this.y = y;
+		this.loupanId = loupanId;
+		this.loudongId = loudongId;
+	}
 
 	public Integer getId() {
 		return id;

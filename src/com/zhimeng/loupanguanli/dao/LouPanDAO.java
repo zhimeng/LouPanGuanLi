@@ -2,18 +2,16 @@ package com.zhimeng.loupanguanli.dao;
 
 import java.util.ArrayList;
 
-import android.R.integer;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 
-import com.zhimeng.loupanguanli.activities.MainActivity;
 import com.zhimeng.loupanguanli.database.DBColumns;
 import com.zhimeng.loupanguanli.database.DBHelper;
 import com.zhimeng.loupanguanli.entity.LouPan;
 
 /**
  * 操作楼盘数据表的类
+ * 
  * @author jy
  *
  */
@@ -21,7 +19,6 @@ public class LouPanDAO {
 	private DBHelper dbHelper;
 
 	public LouPanDAO(Context context) {
-		// TODO Auto-generated constructor stub
 		dbHelper = new DBHelper(context);
 	}
 
@@ -35,9 +32,12 @@ public class LouPanDAO {
 		LouPan lp = new LouPan();
 		lp.setId(cs.getInt(cs.getColumnIndex(DBColumns.LouPanColumns.ID)));
 		lp.setName(cs.getString(cs.getColumnIndex(DBColumns.LouPanColumns.NAME)));
-		lp.setAddress(cs.getString(cs.getColumnIndex(DBColumns.LouPanColumns.ADDRESS)));
-		lp.setRemark(cs.getString(cs.getColumnIndex(DBColumns.LouPanColumns.REMARK)));
-		lp.setPicPath(cs.getString(cs.getColumnIndex(DBColumns.LouPanColumns.PIC_PATH)));
+		lp.setAddress(cs.getString(cs
+				.getColumnIndex(DBColumns.LouPanColumns.ADDRESS)));
+		lp.setRemark(cs.getString(cs
+				.getColumnIndex(DBColumns.LouPanColumns.REMARK)));
+		lp.setPicPath(cs.getString(cs
+				.getColumnIndex(DBColumns.LouPanColumns.PIC_PATH)));
 		return lp;
 	}
 
@@ -50,11 +50,11 @@ public class LouPanDAO {
 
 		ArrayList<LouPan> lps = new ArrayList<LouPan>();
 		Cursor cs = dbHelper.getReadableDatabase().rawQuery(
-				"select * from "+DBColumns.LouPanColumns.TB_NAME+"", null);
+				"select * from " + DBColumns.LouPanColumns.TB_NAME + "", null);
 
 		while (cs.moveToNext()) {
 
-			LouPan lp = new LouPan();	
+			LouPan lp = new LouPan();
 			lp = PottDataLP(cs);// 将楼盘记录封装在一个LouPan对象中
 			lps.add(lp);// 将楼盘对象添加到集合中
 		}
@@ -71,7 +71,8 @@ public class LouPanDAO {
 	public LouPan GetLouPanById(Integer id) {
 
 		Cursor cs = dbHelper.getReadableDatabase().rawQuery(
-				"select * from "+DBColumns.LouPanColumns.TB_NAME+" where "+DBColumns.LouPanColumns.ID+"=?",
+				"select * from " + DBColumns.LouPanColumns.TB_NAME + " where "
+						+ DBColumns.LouPanColumns.ID + "=?",
 				new String[] { String.valueOf(id) });
 		while (cs.moveToNext()) {
 			LouPan lp = new LouPan();// 创建楼盘对象
@@ -93,7 +94,8 @@ public class LouPanDAO {
 
 		ArrayList<LouPan> lps = new ArrayList<LouPan>();
 		Cursor cs = dbHelper.getReadableDatabase().rawQuery(
-				"select * from "+DBColumns.LouPanColumns.TB_NAME+" where "+DBColumns.LouPanColumns.NAME+" like '%?%'",
+				"select * from " + DBColumns.LouPanColumns.TB_NAME + " where "
+						+ DBColumns.LouPanColumns.NAME + " like '%?%'",
 				new String[] { name });
 
 		while (cs.moveToNext()) {
@@ -137,7 +139,7 @@ public class LouPanDAO {
 	 * @param params参数数组
 	 */
 	public void Delete(String sql, Object[] params) {
-		dbHelper.getReadableDatabase().execSQL(sql, params);	 
+		dbHelper.getReadableDatabase().execSQL(sql, params);
 	}
 
 }

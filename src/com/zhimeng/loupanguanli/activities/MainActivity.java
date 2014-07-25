@@ -4,6 +4,7 @@ import com.zhimeng.loupanguanli.R;
 import com.zhimeng.loupanguanli.database.DBHelper;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ public class MainActivity extends Activity {
 	private Button btnCreate;
 	private GridView gvLoupan;// 楼盘信息gridview
 	private LayoutInflater inflater;// 将xml布局文件转化为view对象的服务类
+
 	private DBHelper dbHelper;
 
 	@Override
@@ -44,37 +46,32 @@ public class MainActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
-
+				Intent intent = new Intent(MainActivity.this,
+						CreateActivity.class);
+				startActivity(intent);
 			}
 		});
 	}
 
-	public class MyAdapter extends BaseAdapter {
+	private class MyAdapter extends BaseAdapter {
 
 		@Override
 		public int getCount() {
-			// TODO Auto-generated method stub
-			
 			return 30;
 		}
 
 		@Override
 		public Object getItem(int position) {
-			// TODO Auto-generated method stub
 			return null;
 		}
 
 		@Override
 		public long getItemId(int position) {
-			// TODO Auto-generated method stub
 			return 0;
 		}
 
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
-			// TODO Auto-generated method stub
-
 			View view = inflater.inflate(R.layout.activity_gvloupan_item, null);
 			ImageView ItemImage = (ImageView) view
 					.findViewById(R.id.imgloupanitem);
@@ -83,8 +80,8 @@ public class MainActivity extends Activity {
 			itemtext.setText("哈哈哈哈哈");
 			ItemImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
 			return view;
-
 		}
 
 	}
+
 }
