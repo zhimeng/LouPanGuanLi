@@ -12,8 +12,6 @@ public class LouPanDAO {
 	private DBHelper dbHelper;
 
 	public LouPanDAO(Context context) {
-		// TODO Auto-generated constructor stub
-
 		dbHelper = new DBHelper(context);
 	}
 
