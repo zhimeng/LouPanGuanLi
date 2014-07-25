@@ -30,41 +30,67 @@ public class LouDongDAO {
 	 * @return
 	 */
 	public LouDong PottDataLP(Cursor cs) {
-		LouDong lp = new LouDong();
-		lp.setId(cs.getInt(cs.getColumnIndex(DBColumns.LouDongColumns.ID)));
-		lp.setName(cs.getString(cs.getColumnIndex(DBColumns.LouDongColumns.NAME)));
-		lp.setAddress(cs.getString(cs
-				.getColumnIndex(DBColumns.LouDongColumns.ADDRESS)));
-		lp.setRemark(cs.getString(cs
+		LouDong ld = new LouDong();
+		ld.setId(cs.getInt(cs.getColumnIndex(DBColumns.LouDongColumns.ID)));
+		ld.setName(cs.getString(cs
+				.getColumnIndex(DBColumns.LouDongColumns.NAME)));
+		ld.setLayers(cs.getInt(cs
+				.getColumnIndex(DBColumns.LouDongColumns.LAYERS)));
+		ld.setSets(cs.getInt(cs.getColumnIndex(DBColumns.LouDongColumns.SETS)));
+		ld.setRemark(cs.getString(cs
 				.getColumnIndex(DBColumns.LouDongColumns.REMARK)));
-		lp.setPicPath(cs.getString(cs
-				.getColumnIndex(DBColumns.LouDongColumns.PIC_PATH)));
-		return lp;
+		ld.setNumber(cs.getInt(cs
+				.getColumnIndex(DBColumns.LouDongColumns.NUMBER)));
+		ld.setLoupanId(cs.getInt(cs
+				.getColumnIndex(DBColumns.LouDongColumns.LOUPAN_ID)));
+
+		return ld;
 	}
 
 	/**
-	 * 获取所有楼盘数据
+	 * 判断指定名称的楼栋是否存在
+	 * 
+	 * @param name
+	 * @return
+	 */
+	public boolean isNameExisted(String name, Integer loupanId) {
+		boolean result = false;
+		Cursor cs = dbHelper.getReadableDatabase().rawQuery(
+				"select * from " + DBColumns.LouPanColumns.TB_NAME + " where "
+						+ DBColumns.LouPanColumns.NAME + " = ? and "
+						+ DBColumns.LouDongColumns.LOUPAN_ID + "=?",
+				new String[] { name, String.valueOf(loupanId) });
+
+		if (cs.moveToNext()) {
+			result = true;
+		}
+		return result;
+
+	}
+
+	/**
+	 * 获取所有楼栋数据
 	 * 
 	 * @return
 	 */
 	public ArrayList<LouDong> getAll() {
 
-		ArrayList<LouDong> lps = new ArrayList<LouDong>();
+		ArrayList<LouDong> list = new ArrayList<LouDong>();
 		Cursor cs = dbHelper.getReadableDatabase().rawQuery(
 				"select * from " + DBColumns.LouDongColumns.TB_NAME + "", null);
 
 		while (cs.moveToNext()) {
 
 			LouDong lp = new LouDong();
-			lp = PottDataLP(cs);// 将楼盘记录封装在一个LouDong对象中
-			lps.add(lp);// 将楼盘对象添加到集合中
+			lp = PottDataLP(cs);// 将楼栋记录封装在一个LouDong对象中
+			list.add(lp);// 将楼栋对象添加到集合中
 		}
 		cs.close();
-		return lps;
+		return list;
 	}
 
 	/**
-	 * 根据id获取楼盘对象
+	 * 根据id获取楼栋对象
 	 * 
 	 * @param id
 	 * @return
@@ -76,8 +102,8 @@ public class LouDongDAO {
 						+ DBColumns.LouDongColumns.ID + "=?",
 				new String[] { String.valueOf(id) });
 		while (cs.moveToNext()) {
-			LouDong lp = new LouDong();// 创建楼盘对象
-			lp = PottDataLP(cs);// 将楼盘记录封装在一个LouDong对象中
+			LouDong lp = new LouDong();// 创建楼栋对象
+			lp = PottDataLP(cs);// 将楼栋记录封装在一个LouDong对象中
 			cs.close();
 			return lp;
 		}
@@ -85,15 +111,15 @@ public class LouDongDAO {
 	}
 
 	/**
-	 * 根据楼盘名模糊匹配出楼盘对象
+	 * 根据楼栋名模糊匹配出楼栋对象
 	 * 
 	 * @param name
-	 *            参数楼盘名称
+	 *            参数楼栋名称
 	 * @return
 	 */
 	public ArrayList<LouDong> GetLouDongByName(String name) {
 
-		ArrayList<LouDong> lps = new ArrayList<LouDong>();
+		ArrayList<LouDong> list = new ArrayList<LouDong>();
 		Cursor cs = dbHelper.getReadableDatabase().rawQuery(
 				"select * from " + DBColumns.LouDongColumns.TB_NAME + " where "
 						+ DBColumns.LouDongColumns.NAME + " like '%?%'",
@@ -102,11 +128,11 @@ public class LouDongDAO {
 		while (cs.moveToNext()) {
 
 			LouDong lp = new LouDong();
-			lp = PottDataLP(cs);// 将楼盘记录封装在一个LouDong对象中
-			lps.add(lp);// 将楼盘对象添加到集合中
+			lp = PottDataLP(cs);// 将楼栋记录封装在一个LouDong对象中
+			list.add(lp);// 将楼栋对象添加到集合中
 		}
 		cs.close();
-		return lps;
+		return list;
 	}
 
 	/**

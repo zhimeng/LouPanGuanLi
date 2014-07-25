@@ -28,7 +28,7 @@ public class LouPanDAO {
 	 * @param cs
 	 * @return
 	 */
-	public LouPan PottDataLP(Cursor cs) {
+	private LouPan pottData(Cursor cs) {
 		LouPan lp = new LouPan();
 		lp.setId(cs.getInt(cs.getColumnIndex(DBColumns.LouPanColumns.ID)));
 		lp.setName(cs.getString(cs.getColumnIndex(DBColumns.LouPanColumns.NAME)));
@@ -55,7 +55,7 @@ public class LouPanDAO {
 		while (cs.moveToNext()) {
 
 			LouPan lp = new LouPan();
-			lp = PottDataLP(cs);// 将楼盘记录封装在一个LouPan对象中
+			lp = pottData(cs);// 将楼盘记录封装在一个LouPan对象中
 			lps.add(lp);// 将楼盘对象添加到集合中
 		}
 		cs.close();
@@ -68,7 +68,7 @@ public class LouPanDAO {
 	 * @param id
 	 * @return
 	 */
-	public LouPan GetLouPanById(Integer id) {
+	public LouPan getLouPanById(Integer id) {
 
 		Cursor cs = dbHelper.getReadableDatabase().rawQuery(
 				"select * from " + DBColumns.LouPanColumns.TB_NAME + " where "
@@ -76,11 +76,31 @@ public class LouPanDAO {
 				new String[] { String.valueOf(id) });
 		while (cs.moveToNext()) {
 			LouPan lp = new LouPan();// 创建楼盘对象
-			lp = PottDataLP(cs);// 将楼盘记录封装在一个LouPan对象中
+			lp = pottData(cs);// 将楼盘记录封装在一个LouPan对象中
 			cs.close();
 			return lp;
 		}
 		return null;
+	}
+
+	/**
+	 * 判断指定名称的楼盘是否存在
+	 * 
+	 * @param name
+	 * @return
+	 */
+	public boolean isNameExisted(String name) {
+		boolean result = false;
+		Cursor cs = dbHelper.getReadableDatabase().rawQuery(
+				"select * from " + DBColumns.LouPanColumns.TB_NAME + " where "
+						+ DBColumns.LouPanColumns.NAME + " = ?",
+				new String[] { name });
+
+		if (cs.moveToNext()) {
+			result = true;
+		}
+		return result;
+
 	}
 
 	/**
@@ -90,7 +110,7 @@ public class LouPanDAO {
 	 *            参数楼盘名称
 	 * @return
 	 */
-	public ArrayList<LouPan> GetLouPanByName(String name) {
+	public ArrayList<LouPan> getLouPanByName(String name) {
 
 		ArrayList<LouPan> lps = new ArrayList<LouPan>();
 		Cursor cs = dbHelper.getReadableDatabase().rawQuery(
@@ -101,7 +121,7 @@ public class LouPanDAO {
 		while (cs.moveToNext()) {
 
 			LouPan lp = new LouPan();
-			lp = PottDataLP(cs);// 将楼盘记录封装在一个LouPan对象中
+			lp = pottData(cs);// 将楼盘记录封装在一个LouPan对象中
 			lps.add(lp);// 将楼盘对象添加到集合中
 		}
 		cs.close();
@@ -115,7 +135,7 @@ public class LouPanDAO {
 	 *            ?的sql语句
 	 * @param params参数数组
 	 */
-	public void Insert(String sql, Object[] params) {
+	public void insert(String sql, Object[] params) {
 
 		dbHelper.getReadableDatabase().execSQL(sql, params);
 	}
@@ -127,7 +147,7 @@ public class LouPanDAO {
 	 *            ?的sql语句
 	 * @param params参数数组
 	 */
-	public void Update(String sql, Object[] params) {
+	public void update(String sql, Object[] params) {
 		dbHelper.getReadableDatabase().execSQL(sql, params);
 	}
 
@@ -138,7 +158,7 @@ public class LouPanDAO {
 	 *            ?的sql语句
 	 * @param params参数数组
 	 */
-	public void Delete(String sql, Object[] params) {
+	public void delete(String sql, Object[] params) {
 		dbHelper.getReadableDatabase().execSQL(sql, params);
 	}
 
