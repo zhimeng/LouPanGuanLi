@@ -2,42 +2,43 @@ package com.zhimeng.loupanguanli.dao;
 
 import java.util.ArrayList;
 
-import android.R.integer;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 
-import com.zhimeng.loupanguanli.activities.MainActivity;
 import com.zhimeng.loupanguanli.database.DBColumns;
 import com.zhimeng.loupanguanli.database.DBHelper;
-import com.zhimeng.loupanguanli.entity.LouPan;
+import com.zhimeng.loupanguanli.entity.LouDong;
 
 /**
- * 操作楼盘数据表的类
+ * 操作楼栋数据表的类
+ * 
  * @author jy
  *
  */
-public class LouPanDAO {
+public class LouDongDAO {
 	private DBHelper dbHelper;
 
-	public LouPanDAO(Context context) {
+	public LouDongDAO(Context context) {
 		// TODO Auto-generated constructor stub
 		dbHelper = new DBHelper(context);
 	}
 
 	/**
-	 * 封装数据记录到一个LouPan对象中
+	 * 封装数据记录到一个LouDong对象中
 	 * 
 	 * @param cs
 	 * @return
 	 */
-	public LouPan PottDataLP(Cursor cs) {
-		LouPan lp = new LouPan();
-		lp.setId(cs.getInt(cs.getColumnIndex(DBColumns.LouPanColumns.ID)));
-		lp.setName(cs.getString(cs.getColumnIndex(DBColumns.LouPanColumns.NAME)));
-		lp.setAddress(cs.getString(cs.getColumnIndex(DBColumns.LouPanColumns.ADDRESS)));
-		lp.setRemark(cs.getString(cs.getColumnIndex(DBColumns.LouPanColumns.REMARK)));
-		lp.setPicPath(cs.getString(cs.getColumnIndex(DBColumns.LouPanColumns.PIC_PATH)));
+	public LouDong PottDataLP(Cursor cs) {
+		LouDong lp = new LouDong();
+		lp.setId(cs.getInt(cs.getColumnIndex(DBColumns.LouDongColumns.ID)));
+		lp.setName(cs.getString(cs.getColumnIndex(DBColumns.LouDongColumns.NAME)));
+		lp.setAddress(cs.getString(cs
+				.getColumnIndex(DBColumns.LouDongColumns.ADDRESS)));
+		lp.setRemark(cs.getString(cs
+				.getColumnIndex(DBColumns.LouDongColumns.REMARK)));
+		lp.setPicPath(cs.getString(cs
+				.getColumnIndex(DBColumns.LouDongColumns.PIC_PATH)));
 		return lp;
 	}
 
@@ -46,16 +47,16 @@ public class LouPanDAO {
 	 * 
 	 * @return
 	 */
-	public ArrayList<LouPan> getAll() {
+	public ArrayList<LouDong> getAll() {
 
-		ArrayList<LouPan> lps = new ArrayList<LouPan>();
+		ArrayList<LouDong> lps = new ArrayList<LouDong>();
 		Cursor cs = dbHelper.getReadableDatabase().rawQuery(
-				"select * from "+DBColumns.LouPanColumns.TB_NAME+"", null);
+				"select * from " + DBColumns.LouDongColumns.TB_NAME + "", null);
 
 		while (cs.moveToNext()) {
 
-			LouPan lp = new LouPan();	
-			lp = PottDataLP(cs);// 将楼盘记录封装在一个LouPan对象中
+			LouDong lp = new LouDong();
+			lp = PottDataLP(cs);// 将楼盘记录封装在一个LouDong对象中
 			lps.add(lp);// 将楼盘对象添加到集合中
 		}
 		cs.close();
@@ -68,14 +69,15 @@ public class LouPanDAO {
 	 * @param id
 	 * @return
 	 */
-	public LouPan GetLouPanById(Integer id) {
+	public LouDong GetLouDongById(Integer id) {
 
 		Cursor cs = dbHelper.getReadableDatabase().rawQuery(
-				"select * from "+DBColumns.LouPanColumns.TB_NAME+" where "+DBColumns.LouPanColumns.ID+"=?",
+				"select * from " + DBColumns.LouDongColumns.TB_NAME + " where "
+						+ DBColumns.LouDongColumns.ID + "=?",
 				new String[] { String.valueOf(id) });
 		while (cs.moveToNext()) {
-			LouPan lp = new LouPan();// 创建楼盘对象
-			lp = PottDataLP(cs);// 将楼盘记录封装在一个LouPan对象中
+			LouDong lp = new LouDong();// 创建楼盘对象
+			lp = PottDataLP(cs);// 将楼盘记录封装在一个LouDong对象中
 			cs.close();
 			return lp;
 		}
@@ -89,17 +91,18 @@ public class LouPanDAO {
 	 *            参数楼盘名称
 	 * @return
 	 */
-	public ArrayList<LouPan> GetLouPanByName(String name) {
+	public ArrayList<LouDong> GetLouDongByName(String name) {
 
-		ArrayList<LouPan> lps = new ArrayList<LouPan>();
+		ArrayList<LouDong> lps = new ArrayList<LouDong>();
 		Cursor cs = dbHelper.getReadableDatabase().rawQuery(
-				"select * from "+DBColumns.LouPanColumns.TB_NAME+" where "+DBColumns.LouPanColumns.NAME+" like '%?%'",
+				"select * from " + DBColumns.LouDongColumns.TB_NAME + " where "
+						+ DBColumns.LouDongColumns.NAME + " like '%?%'",
 				new String[] { name });
 
 		while (cs.moveToNext()) {
 
-			LouPan lp = new LouPan();
-			lp = PottDataLP(cs);// 将楼盘记录封装在一个LouPan对象中
+			LouDong lp = new LouDong();
+			lp = PottDataLP(cs);// 将楼盘记录封装在一个LouDong对象中
 			lps.add(lp);// 将楼盘对象添加到集合中
 		}
 		cs.close();
@@ -137,7 +140,6 @@ public class LouPanDAO {
 	 * @param params参数数组
 	 */
 	public void Delete(String sql, Object[] params) {
-		dbHelper.getReadableDatabase().execSQL(sql, params);	 
+		dbHelper.getReadableDatabase().execSQL(sql, params);
 	}
-
 }
