@@ -47,7 +47,7 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent(MainActivity.this,
-						CreateActivity.class);
+						CreateLouPanActivity.class);
 				startActivity(intent);
 			}
 		});
