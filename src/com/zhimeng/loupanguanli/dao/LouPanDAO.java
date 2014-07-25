@@ -131,12 +131,19 @@ public class LouPanDAO {
 	/**
 	 * 插入数据操作
 	 * 
-	 * @param sql包含参数占位符
-	 *            ?的sql语句
-	 * @param params参数数组
+	 * @param lp
+	 *            LouPan对象
 	 */
-	public void insert(String sql, Object[] params) {
+	public void insert(LouPan lp) {
+		String sql = "insert into" + DBColumns.LouPanColumns.TB_NAME + "("
+				+ DBColumns.LouPanColumns.NAME + ","
+				+ DBColumns.LouPanColumns.PIC_PATH + ","
+				+ DBColumns.LouPanColumns.ADDRESS + ","
+				+ DBColumns.LouPanColumns.REMARK + ") values(?,?,?,?)";
+		String[] params = new String[] { lp.getName(), lp.getPicPath(),
+				lp.getAddress(), lp.getRemark()
 
+		};
 		dbHelper.getReadableDatabase().execSQL(sql, params);
 	}
 
