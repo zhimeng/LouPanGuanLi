@@ -6,6 +6,7 @@ import com.zhimeng.loupanguanli.R;
 import com.zhimeng.loupanguanli.config.Config;
 import com.zhimeng.loupanguanli.dao.LouPanDAO;
 import com.zhimeng.loupanguanli.entity.LouPan;
+import com.zhimeng.loupanguanli.entity.dto.LouPanDto;
 import com.zhimeng.loupanguanli.util.PhotoRequestUtil;
 import com.zhimeng.loupanguanli.util.StorageUtil;
 import com.zhimeng.loupanguanli.util.UUIDUtil;
@@ -115,9 +116,14 @@ public class CreateLouPanActivity extends Activity {
 						LouPan louPan = new LouPan(nameStr, addressStr,
 								remarkStr, picPath);
 						louPanDao.insert(louPan);
-						;
+						// 跳转到创建楼栋页面
 						Intent intent = new Intent(CreateLouPanActivity.this,
 								CreateLouDongActivity.class);
+						LouPanDto louPanDto = new LouPanDto(bitmap, nameStr,
+								addressStr, remarkStr);
+						intent.putExtra("loupan", louPanDto);
+						startActivity(intent);
+						CreateLouPanActivity.this.finish();
 					} else {
 						Toast.makeText(CreateLouPanActivity.this,
 								"保存失败，SDCard不可用", Toast.LENGTH_SHORT).show();

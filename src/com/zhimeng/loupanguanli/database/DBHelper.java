@@ -17,20 +17,20 @@ public class DBHelper extends SQLiteOpenHelper {
 		// 创建楼盘表
 		db.execSQL("create table if not exists loupan("
 				+ "id integer primary key autoincrement," + "name varchar(40),"
-				+ "address varchar(100)," + "remark varchar(200)"
+				+ "address varchar(100)," + "remark varchar(200),"
 				+ "picpath varchar(100))");
 		// 创建楼栋表
 		db.execSQL("create table if not exists loudong("
-				+ "id integer primary key autoincrement," + "number integer"
-				+ "name varchar(40)," + "layers integer," + "sets integer"
-				+ "remark varchar(200),"
-				+ "loupanid integer foreign key references loupan(id))");
+				+ "id integer primary key autoincrement," + "number integer,"
+				+ "name varchar(40)," + "layers integer," + "sets integer,"
+				+ "remark varchar(200)," + "loupanid integer,"
+				+ "foreign key(loupanid) references loupan(id))");
 		// 创建坐标表
 		db.execSQL("create table if not exists zuobiao("
 				+ "id integer primary key autoincrement," + "x integer,"
-				+ "y integer"
-				+ "loupanid integer foreign key references loupan(id),"
-				+ "loudongid integer foreign key references loudong(id))");
+				+ "y integer," + "loupanid integer ," + "loudongid integer,"
+				+ "foreign key(loupanid) references loupan(id),"
+				+ "foreign key(loudongid) references loudong(id))");
 
 	}
 
