@@ -111,17 +111,21 @@ public class LouDongDAO {
 	}
 
 	/**
-	 * 根据楼栋名模糊匹配出楼栋对象
+	 * 根据楼栋名获取指定楼盘下的楼栋对象
 	 * 
 	 * @param name
-	 *            参数楼栋名称
+	 *            楼栋名称
+	 * @param loupanId
+	 *            楼盘id
 	 * @return
 	 */
-	public ArrayList<LouDong> GetLouDongByName(String name) {
+	public ArrayList<LouDong> GetLouDongByName(String name, Integer loupanId) {
 
 		ArrayList<LouDong> list = new ArrayList<LouDong>();
 		Cursor cs = dbHelper.getReadableDatabase().rawQuery(
 				"select * from " + DBColumns.LouDongColumns.TB_NAME + " where "
+						+ DBColumns.LouDongColumns.LOUPAN_ID + " = "
+						+ String.valueOf(loupanId) + " and "
 						+ DBColumns.LouDongColumns.NAME + " like '%?%'",
 				new String[] { name });
 
