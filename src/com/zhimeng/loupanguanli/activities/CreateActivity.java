@@ -108,8 +108,6 @@ public class CreateActivity extends Activity {
 						Toast.makeText(CreateActivity.this, "保存失败，SDCard不可用",
 								Toast.LENGTH_SHORT).show();
 					}
-                    
-					//
 				}
 
 			}
