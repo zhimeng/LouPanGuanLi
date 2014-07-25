@@ -72,7 +72,7 @@ public class MainActivity extends Activity {
 
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
-			View view = inflater.inflate(R.layout.activity_gvloupan_item, null);
+			View view = inflater.inflate(R.layout.item_gridview_loupan, null);
 			ImageView ItemImage = (ImageView) view
 					.findViewById(R.id.imgloupanitem);
 			ItemImage.setImageResource(R.drawable.ic_launcher);
