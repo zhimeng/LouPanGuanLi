@@ -146,8 +146,20 @@ public class LouDongDAO {
 	 *            ?的sql语句
 	 * @param params参数数组
 	 */
-	public void Insert(String sql, Object[] params) {
+	public void Insert(LouDong ld) {
+		String sql = "insert into " + DBColumns.LouDongColumns.TB_NAME + "("
+				+ DBColumns.LouDongColumns.LAYERS + ","
+				+ DBColumns.LouDongColumns.LOUPAN_ID + ","
+				+ DBColumns.LouDongColumns.NAME + ","
+				+ DBColumns.LouDongColumns.NUMBER + ","
+				+ DBColumns.LouDongColumns.REMARK + ","
+				+ DBColumns.LouDongColumns.SETS + ") values(?,?,?,?,?,?)";
+		String[] params = new String[] { String.valueOf(ld.getLayers()),
+				String.valueOf(ld.getLoupanId()), ld.getName(),
+				String.valueOf(ld.getNumber()), String.valueOf(ld.getRemark()),
+				String.valueOf(ld.getSets()),
 
+		};
 		dbHelper.getReadableDatabase().execSQL(sql, params);
 	}
 
