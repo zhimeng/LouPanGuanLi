@@ -135,7 +135,7 @@ public class LouPanDAO {
 	 *            LouPan对象
 	 */
 	public void insert(LouPan lp) {
-		String sql = "insert into" + DBColumns.LouPanColumns.TB_NAME + "("
+		String sql = "insert into " + DBColumns.LouPanColumns.TB_NAME + "("
 				+ DBColumns.LouPanColumns.NAME + ","
 				+ DBColumns.LouPanColumns.PIC_PATH + ","
 				+ DBColumns.LouPanColumns.ADDRESS + ","
