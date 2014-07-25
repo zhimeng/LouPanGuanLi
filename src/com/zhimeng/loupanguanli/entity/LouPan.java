@@ -1,12 +1,22 @@
 package com.zhimeng.loupanguanli.entity;
 
-public class LouPan {
+import java.io.Serializable;
+
+public class LouPan implements Serializable {
+	private static final long serialVersionUID = -2839206825577434899L;
 
 	private Integer id;// 楼盘ID
 	private String name;// 楼盘名称
 	private String address;// 楼盘地址
 	private String remark;// 楼盘备注
 	private String picPath;// 图片路径
+
+	public LouPan(String name, String address, String remark, String picPath) {
+		this.name = name;
+		this.address = address;
+		this.remark = remark;
+		this.picPath = picPath;
+	}
 
 	public Integer getId() {
 		return id;
