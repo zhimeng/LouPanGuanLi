@@ -110,7 +110,7 @@ public class LouPanDAO {
 	 *            参数楼盘名称
 	 * @return
 	 */
-	public ArrayList<LouPan> getLouPanByName(String name) {
+	public ArrayList<LouPan> getLPlistByName(String name) {
 
 		ArrayList<LouPan> lps = new ArrayList<LouPan>();
 		Cursor cs = dbHelper.getReadableDatabase().rawQuery(
@@ -126,6 +126,31 @@ public class LouPanDAO {
 		}
 		cs.close();
 		return lps;
+	}
+
+	/**
+	 * 根据楼盘名查询楼盘对象
+	 * 
+	 * @param name
+	 *            参数楼盘名称
+	 * @return
+	 */
+	public LouPan getLouPanByName(String name) {
+
+		LouPan lp = null;
+		Cursor cs = dbHelper.getReadableDatabase().rawQuery(
+				"select * from " + DBColumns.LouPanColumns.TB_NAME + " where "
+						+ DBColumns.LouPanColumns.NAME + " =? ",
+				new String[] { name });
+
+		while (cs.moveToNext()) {
+
+			lp = new LouPan();
+			lp = pottData(cs);// 将楼盘记录封装在一个LouPan对象中
+
+		}
+		cs.close();
+		return lp;
 	}
 
 	/**
