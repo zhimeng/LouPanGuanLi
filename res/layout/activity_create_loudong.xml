@@ -1,6 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:baselineAligned="false"
+    android:divider="?android:attr/dividerHorizontal"
+    android:orientation="horizontal"
+    android:showDividers="middle" >
 
-</RelativeLayout>
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1" >
+
+        <Button
+            android:id="@+id/btn_create_loudong"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="创建楼栋" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/btn_create_loudong"
+            android:layout_alignRight="@id/btn_create_loudong"
+            android:layout_below="@id/btn_create_loudong" >
+
+            <LinearLayout
+                android:id="@+id/ll_loudong"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    style="?android:attr/buttonBarStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:visibility="gone" >
+
+                    <Button
+                        android:id="@+id/btn_save_loudong"
+                        style="?android:attr/buttonBarButtonStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="保存" />
+
+                    <Button
+                        android:id="@+id/btn_cancel_loudong"
+                        style="?android:attr/buttonBarButtonStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="取消" />
+                </LinearLayout>
+
+                <EditText
+                    android:id="@+id/et_loudong_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="楼栋编号"
+                    android:inputType="number"
+                    android:singleLine="true" />
+
+                <EditText
+                    android:id="@+id/et_loudong_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="楼栋名称"
+                    android:singleLine="true" />
+
+                <EditText
+                    android:id="@+id/et_layers"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="楼栋层数"
+                    android:inputType="number"
+                    android:singleLine="true" />
+
+                <EditText
+                    android:id="@+id/et_sets"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="套/层"
+                    android:inputType="number"
+                    android:singleLine="true" />
+
+                <EditText
+                    android:id="@+id/et_loudong_remark"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:hint="楼栋备注" />
+            </LinearLayout>
+        </ScrollView>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_loc"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="4" >
+
+        <ImageView
+            android:id="@+id/imgv_pic"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerInside"
+            android:src="@drawable/pic_default" />
+    </RelativeLayout>
+
+</LinearLayout>

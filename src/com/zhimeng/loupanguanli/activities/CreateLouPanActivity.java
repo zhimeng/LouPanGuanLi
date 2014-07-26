@@ -2,15 +2,6 @@ package com.zhimeng.loupanguanli.activities;
 
 import java.io.File;
 
-import com.zhimeng.loupanguanli.R;
-import com.zhimeng.loupanguanli.config.Config;
-import com.zhimeng.loupanguanli.dao.LouPanDAO;
-import com.zhimeng.loupanguanli.entity.LouPan;
-import com.zhimeng.loupanguanli.entity.dto.LouPanDto;
-import com.zhimeng.loupanguanli.util.PhotoRequestUtil;
-import com.zhimeng.loupanguanli.util.StorageUtil;
-import com.zhimeng.loupanguanli.util.UUIDUtil;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -22,6 +13,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import com.zhimeng.loupanguanli.R;
+import com.zhimeng.loupanguanli.config.Config;
+import com.zhimeng.loupanguanli.dao.LouPanDAO;
+import com.zhimeng.loupanguanli.entity.LouPan;
+import com.zhimeng.loupanguanli.util.PhotoRequestUtil;
+import com.zhimeng.loupanguanli.util.StorageUtil;
+import com.zhimeng.loupanguanli.util.UUIDUtil;
 
 public class CreateLouPanActivity extends Activity {
 	private Button btnSelectPic;
@@ -95,7 +94,7 @@ public class CreateLouPanActivity extends Activity {
 				LouPanDAO louPanDao = new LouPanDAO(CreateLouPanActivity.this);
 				String nameStr = etName.getText().toString().trim();
 				if ("".equals(nameStr) || bitmap == null) {
-					Toast.makeText(CreateLouPanActivity.this, "图片、楼盘名不能为空",
+					Toast.makeText(CreateLouPanActivity.this, "图片&楼盘名均不能为空",
 							Toast.LENGTH_SHORT).show();
 				} else if (louPanDao.isNameExisted(nameStr)) {
 					Toast.makeText(CreateLouPanActivity.this, "楼盘名已存在",
@@ -116,12 +115,11 @@ public class CreateLouPanActivity extends Activity {
 						LouPan louPan = new LouPan(nameStr, addressStr,
 								remarkStr, picPath);
 						louPanDao.insert(louPan);
+						louPan = louPanDao.getLouPanByName(nameStr);
 						// 跳转到创建楼栋页面
 						Intent intent = new Intent(CreateLouPanActivity.this,
 								CreateLouDongActivity.class);
-						LouPanDto louPanDto = new LouPanDto(bitmap, nameStr,
-								addressStr, remarkStr);
-						intent.putExtra("loupan", louPanDto);
+						intent.putExtra("loupan", louPan);
 						startActivity(intent);
 						CreateLouPanActivity.this.finish();
 					} else {

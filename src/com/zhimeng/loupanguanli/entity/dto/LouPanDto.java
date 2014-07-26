@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 public class LouPanDto implements Serializable {
 	private static final long serialVersionUID = 6461625063526606984L;
 
+	// Bitmap不是Serializable对象，不能序列化
 	private Bitmap bitmap;// 楼盘图
 	private String name;// 楼盘名称
 	private String address;// 楼盘地址

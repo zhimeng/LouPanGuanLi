@@ -8,7 +8,6 @@ import android.database.Cursor;
 import com.zhimeng.loupanguanli.database.DBColumns;
 import com.zhimeng.loupanguanli.database.DBHelper;
 import com.zhimeng.loupanguanli.entity.ZuoBiao;
-import com.zhimeng.loupanguanli.entity.ZuoBiao;
 
 /**
  * 操作坐标坐标数据表的类
