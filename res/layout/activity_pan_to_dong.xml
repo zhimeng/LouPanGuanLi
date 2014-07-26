@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:baselineAligned="false"
+    android:divider="?android:attr/dividerHorizontal"
+    android:orientation="horizontal"
+    android:showDividers="middle" >
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1" >
+
+        <ListView
+            android:id="@+id/lv_loupan_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_loc"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="4" >
+
+        <ImageView
+            android:id="@+id/imgv_pic"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerInside"
+            android:src="@drawable/pic_default" />
+
+        <TextView
+            android:id="@+id/tv_loupan_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="#80000000"
+            android:padding="2dp"
+            android:scrollHorizontally="true"
+            android:singleLine="true"
+            android:text="楼盘详情" />
+    </RelativeLayout>
+
+</LinearLayout>

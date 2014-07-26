@@ -84,9 +84,17 @@ public class CreateLouDongActivity extends Activity {
 					LouDong louDong = new LouDong(number, name, layers, sets,
 							remark, louPan.getId());
 					// 楼栋坐标相关信息
-
+					Button btn = new Button(CreateLouDongActivity.this);
+					btn.setText(louDong.getName() + "#");
+					rlLoc.addView(btn);
+					RelativeLayout.LayoutParams mParams = (RelativeLayout.LayoutParams) btn
+							.getLayoutParams();
 					louDongDao.Insert(louDong);
-
+					louDong = louDongDao.GetLouDongByName(name, louPan.getId());
+					zuoBiaoDao.saveZuoBiao(new ZuoBiao(mParams.leftMargin,
+							mParams.topMargin, louDong.getId(), louPan.getId()));
+					btn.setOnTouchListener(new MOnTouchListener(louPan.getId(),
+							louDong.getId()));
 				} else {
 					Toast.makeText(CreateLouDongActivity.this, "楼栋名不为空并且应唯一",
 							Toast.LENGTH_SHORT).show();
@@ -128,7 +136,7 @@ public class CreateLouDongActivity extends Activity {
 				RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) v
 						.getLayoutParams();
 				// 保存坐标
-				zuoBiaoDao.Insert(new ZuoBiao(params.leftMargin,
+				zuoBiaoDao.saveZuoBiao(new ZuoBiao(params.leftMargin,
 						params.topMargin, loupanId, loudongId));
 				break;
 			case MotionEvent.ACTION_POINTER_DOWN:
