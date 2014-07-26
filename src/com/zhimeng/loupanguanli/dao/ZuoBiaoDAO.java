@@ -190,24 +190,27 @@ public class ZuoBiaoDAO {
 			// 如果当前楼栋标签已存在，则执行更新
 			sql = "update " + DBColumns.ZuoBiaoColumns.TB_NAME + " set "
 					+ String.valueOf(DBColumns.ZuoBiaoColumns.X) + "=?,"
-					+ String.valueOf(DBColumns.ZuoBiaoColumns.Y) + "=? where "
-					+ String.valueOf(DBColumns.ZuoBiaoColumns.Y) + "=? and "
-					+ String.valueOf(DBColumns.ZuoBiaoColumns.Y) + "=?";
-			params = new String[] { String.valueOf(zb.getLoudongId()),
-					String.valueOf(zb.getLoupanId()),
-					String.valueOf(zb.getX()), String.valueOf(zb.getY()) };
+					+ String.valueOf(DBColumns.ZuoBiaoColumns.Y) + "=?  where "
+					+ String.valueOf(DBColumns.ZuoBiaoColumns.LOUDONG_ID)
+					+ "=? and "
+					+ String.valueOf(DBColumns.ZuoBiaoColumns.LOUPAN_ID) + "=?";
+			params = new String[] { String.valueOf(zb.getX()),
+					String.valueOf(zb.getY()),
+					String.valueOf(zb.getLoudongId()),
+					String.valueOf(zb.getLoupanId()) };
 			Update(sql, params);
 		} else {// 否则执行插入
-							
-			/*sql = "insert into " + DBColumns.ZuoBiaoColumns.TB_NAME + "("
-					+ String.valueOf(DBColumns.ZuoBiaoColumns.LOUDONG_ID) + ","
-					+ String.valueOf(DBColumns.ZuoBiaoColumns.LOUPAN_ID) + ","
-					+ String.valueOf(DBColumns.ZuoBiaoColumns.X) + ","
-					+ String.valueOf(DBColumns.ZuoBiaoColumns.Y)
-					+ ") Values(?,?,?,?)";
-			params = new String[] { String.valueOf(zb.getLoudongId()),
-					String.valueOf(zb.getLoupanId()),
-					String.valueOf(zb.getX()), String.valueOf(zb.getY()) };*/
+
+			/*
+			 * sql = "insert into " + DBColumns.ZuoBiaoColumns.TB_NAME + "(" +
+			 * String.valueOf(DBColumns.ZuoBiaoColumns.LOUDONG_ID) + "," +
+			 * String.valueOf(DBColumns.ZuoBiaoColumns.LOUPAN_ID) + "," +
+			 * String.valueOf(DBColumns.ZuoBiaoColumns.X) + "," +
+			 * String.valueOf(DBColumns.ZuoBiaoColumns.Y) + ") Values(?,?,?,?)";
+			 * params = new String[] { String.valueOf(zb.getLoudongId()),
+			 * String.valueOf(zb.getLoupanId()), String.valueOf(zb.getX()),
+			 * String.valueOf(zb.getY()) };
+			 */
 			Insert(zb);
 		}
 	}
