@@ -4,22 +4,29 @@
     android:layout_height="wrap_content"
     android:paddingBottom="4dip" >
 
-    <ImageView
-        android:id="@+id/imgloupanitem"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true" 
+        android:orientation="vertical" 
+        android:gravity="center"
         >
-    </ImageView>
 
-    <TextView
-        android:id="@+id/tvloupanItem"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/ItemImage"
-        android:layout_centerHorizontal="true"
-        android:text=""
-        android:textColor="#FF000000" >
-    </TextView>
+        <ImageView
+            android:id="@+id/item_imgPic"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/ic_launcher" >
+        </ImageView>
+
+        <TextView
+            android:id="@+id/item_tvName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="山水人家111"
+            
+            android:textColor="#FF000000" >
+        </TextView>
+    </LinearLayout>
 
 </RelativeLayout>
