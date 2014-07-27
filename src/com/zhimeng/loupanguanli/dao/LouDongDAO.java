@@ -50,14 +50,14 @@ public class LouDongDAO {
 	/**
 	 * 判断指定名称的楼栋是否存在
 	 * 
-	 * @param name
+	 * @param name 楼栋名称
 	 * @return
 	 */
 	public boolean isNameExisted(String name, Integer loupanId) {
 		boolean result = false;
 		Cursor cs = dbHelper.getReadableDatabase().rawQuery(
-				"select * from " + DBColumns.LouPanColumns.TB_NAME + " where "
-						+ DBColumns.LouPanColumns.NAME + " = ? and "
+				"select * from " + DBColumns.LouDongColumns.TB_NAME + " where "
+						+ DBColumns.LouDongColumns.NAME + " = ? and "
 						+ DBColumns.LouDongColumns.LOUPAN_ID + "=?",
 				new String[] { name, String.valueOf(loupanId) });
 
