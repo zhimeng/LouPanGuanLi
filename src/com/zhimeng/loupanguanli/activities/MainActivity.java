@@ -60,44 +60,38 @@ public class MainActivity extends Activity {
 		// 通过Adapter显示数据
 		gvLoupan.setAdapter(new MyAdapter(lpdao.getAll()));
 
-		final View v_menu = inflater.inflate(R.layout.menu_gridview_loupan,
-				null);// 长按击时弹出的菜单对话框
-
-		// 编辑楼盘文件信息的按钮
-		Button btnEditLP_info = (Button) v_menu
-				.findViewById(R.id.btnEditLP_info);
-		btnEditLP_info.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-
-			}
-		});
-
-		// 编辑楼盘图片的按钮
-		Button btnEditLP_pic = (Button) v_menu.findViewById(R.id.btnEditLP_pic);
-
-		// 编辑楼栋文件信息的按钮
-		Button btnEditLD_info = (Button) v_menu
-				.findViewById(R.id.btnEditLD_info);
-
-		// 编辑楼栋坐标分布的按钮
-		Button btnEditLD_zuobiao = (Button) v_menu
-				.findViewById(R.id.btnEditLD_zuobiao);
-
-		// 删除楼盘的按钮
-		Button btndelete_loupan = (Button) v_menu
-				.findViewById(R.id.btndelete_loupan);
-
+		/*
+		 * 
+		 * // 编辑楼盘文件信息的按钮 Button btnEditLP_info = (Button) v_menu
+		 * .findViewById(R.id.btnEditLP_info);
+		 * btnEditLP_info.setOnClickListener(new View.OnClickListener() {
+		 * 
+		 * @Override public void onClick(View v) { // TODO Auto-generated method
+		 * stub
+		 * 
+		 * } });
+		 * 
+		 * // 编辑楼盘图片的按钮 Button btnEditLP_pic = (Button)
+		 * v_menu.findViewById(R.id.btnEditLP_pic);
+		 * 
+		 * // 编辑楼栋文件信息的按钮 Button btnEditLD_info = (Button) v_menu
+		 * .findViewById(R.id.btnEditLD_info);
+		 * 
+		 * // 编辑楼栋坐标分布的按钮 Button btnEditLD_zuobiao = (Button) v_menu
+		 * .findViewById(R.id.btnEditLD_zuobiao);
+		 * 
+		 * // 删除楼盘的按钮 Button btndelete_loupan = (Button) v_menu
+		 * .findViewById(R.id.btndelete_loupan);
+		 */
 		// 设置gridview的长按事件
+
 		gvLoupan.setOnItemLongClickListener(new OnItemLongClickListener() {
 
 			@Override
 			public boolean onItemLongClick(AdapterView<?> parent, View view,
-					int position, long id) {
-				// TODO Auto-generated method stub
-
+					int position, long id) { // TODO Auto-generated method stub
+				View v_menu = inflater.inflate(R.layout.menu_gridview_loupan,
+						null);// 长按击时弹出的菜单对话框
 				LouPan thisLP = (LouPan) loupans.get(position);// 触发本事件的楼盘对象
 
 				AlertDialog.Builder builder_Dialog = new AlertDialog.Builder(
@@ -113,23 +107,22 @@ public class MainActivity extends Activity {
 		});
 
 		// 设置gridview的单击事件
-		gvLoupan.setOnItemClickListener(new OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
-				// TODO Auto-generated method stub
-				LouPan thisLP = (LouPan) loupans.get(position);// 触发本事件的楼盘对象
-
-				//点击楼盘后跳转页面到查看楼盘楼栋分布界面
-				Intent intent = new Intent(MainActivity.this,
-						PantoDongActivity.class);
-
-				intent.putExtra("loupan", thisLP);
-				startActivity(intent);
-			}
-
-		});
+		/*
+		 * gvLoupan.setOnItemClickListener(new OnItemClickListener() {
+		 * 
+		 * @Override public void onItemClick(AdapterView<?> parent, View view,
+		 * int position, long id) { // TODO Auto-generated method stub LouPan
+		 * thisLP = (LouPan) loupans.get(position);// 触发本事件的楼盘对象
+		 * 
+		 * // 点击楼盘后跳转页面到查看楼盘楼栋分布界面 Intent intent = new Intent(MainActivity.this,
+		 * PantoDongActivity.class);
+		 * 
+		 * // intent.putExtra("loupan", thisLP); Bundle bundle = new Bundle();
+		 * bundle.putSerializable("loupan", thisLP); intent.putExtras(bundle);
+		 * startActivity(intent); }
+		 * 
+		 * });
+		 */
 
 		btnCreate = (Button) MainActivity.this.findViewById(R.id.btn_create);
 		// 点击创建
@@ -168,6 +161,7 @@ public class MainActivity extends Activity {
 
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
+
 			// 将item_gridview_loupan.xml文件转化为view对象
 			View view = inflater.inflate(R.layout.item_gridview_loupan, null);
 

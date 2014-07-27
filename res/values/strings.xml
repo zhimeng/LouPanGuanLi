@@ -1,10 +1,15 @@
 <resources>
 
     <string name="app_name">楼盘管理</string>
-
     <string name="lbl_newLP">新建楼盘</string>
     <string name="lbl_viewLP">查看楼盘</string>
     <string name="lbl_editLP">编辑楼盘</string>
     <string name="lbl_deleteLP">删除楼盘</string>
 
+    <string name="edit_loupan_info">修改楼盘信息</string>
+    <string name="edit_loupan_pic">修改楼盘图片</string>
+    <string name="edit_loudong_info">修改楼栋信息</string>
+    <string name="edit_loudong_zuobiao">修改楼栋坐标</string>
+    <string name="delete_loupan">删除楼盘</string>
+    
 </resources>

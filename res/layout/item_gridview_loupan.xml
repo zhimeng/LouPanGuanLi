@@ -1,32 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:paddingBottom="4dip" >
+    android:gravity="center"
+    android:orientation="vertical" >
 
-    <LinearLayout
-        android:layout_width="fill_parent"
+    <ImageView
+        android:id="@+id/item_imgPic"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/ic_launcher" >
+    </ImageView>
+
+    <TextView
+        android:id="@+id/item_tvName"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical" 
-        android:gravity="center"
-        >
+        android:text="山水人家111"
+        android:textColor="#FF000000" >
+    </TextView>
 
-        <ImageView
-            android:id="@+id/item_imgPic"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_centerHorizontal="true"
-            android:src="@drawable/ic_launcher" >
-        </ImageView>
-
-        <TextView
-            android:id="@+id/item_tvName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="山水人家111"
-            
-            android:textColor="#FF000000" >
-        </TextView>
-    </LinearLayout>
-
-</RelativeLayout>
+</LinearLayout>
