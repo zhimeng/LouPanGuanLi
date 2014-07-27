@@ -1,5 +1,8 @@
 package com.zhimeng.loupanguanli.database;
 
+/*
+ * 数据库各个表的列名
+ */
 public final class DBColumns {
 
 	public static final class LouPanColumns {
