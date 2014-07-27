@@ -3,18 +3,10 @@ package com.zhimeng.loupanguanli.activities;
 import java.io.File;
 import java.util.ArrayList;
 
-import com.zhimeng.loupanguanli.R;
-import com.zhimeng.loupanguanli.config.Config;
-import com.zhimeng.loupanguanli.dao.LouPanDAO;
-import com.zhimeng.loupanguanli.database.DBHelper;
-import com.zhimeng.loupanguanli.entity.LouPan;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -30,11 +22,14 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.zhimeng.loupanguanli.R;
+import com.zhimeng.loupanguanli.config.Config;
+import com.zhimeng.loupanguanli.dao.LouPanDAO;
+import com.zhimeng.loupanguanli.entity.LouPan;
 
 public class MainActivity extends Activity {
 	private Button btnCreate;
@@ -70,7 +65,7 @@ public class MainActivity extends Activity {
 
 			@Override
 			public boolean onItemLongClick(AdapterView<?> parent, View view,
-					int position, long id) { // TODO Auto-generated method stub
+					int position, long id) {
 				View v_menu = inflater.inflate(R.layout.menu_gridview_loupan,
 						null);// 长按击时弹出的菜单对话框
 				LouPan thisLP = (LouPan) loupans.get(position);// 触发本事件的楼盘对象
@@ -83,7 +78,9 @@ public class MainActivity extends Activity {
 
 					@Override
 					public void onClick(View v) {
-						// TODO Auto-generated method
+
+					
+
 
 					}
 				});
@@ -137,23 +134,22 @@ public class MainActivity extends Activity {
 
 		});
 
-		// 设置gridview的单击事件
-		/*
-		 * gvLoupan.setOnItemClickListener(new OnItemClickListener() {
-		 * 
-		 * @Override public void onItemClick(AdapterView<?> parent, View view,
-		 * int position, long id) { // TODO Auto-generated method stub LouPan
-		 * thisLP = (LouPan) loupans.get(position);// 触发本事件的楼盘对象
-		 * 
-		 * // 点击楼盘后跳转页面到查看楼盘楼栋分布界面 Intent intent = new Intent(MainActivity.this,
-		 * PantoDongActivity.class);
-		 * 
-		 * // intent.putExtra("loupan", thisLP); Bundle bundle = new Bundle();
-		 * bundle.putSerializable("loupan", thisLP); intent.putExtras(bundle);
-		 * startActivity(intent); }
-		 * 
-		 * });
-		 */
+
+		// 设置gratify的单击事件
+		gvLoupan.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				LouPan thisLP = (LouPan) loupans.get(position);// 触发本事件的楼盘对象
+				// 点击楼盘后跳转页面到查看楼盘楼栋分布界面
+				Intent intent = new Intent(MainActivity.this,
+						PantoDongActivity.class);
+				intent.putExtra("loupan", thisLP);
+				startActivity(intent);
+			}
+
+		});
+
 
 		btnCreate = (Button) MainActivity.this.findViewById(R.id.btn_create);
 		// 点击创建
@@ -206,7 +202,8 @@ public class MainActivity extends Activity {
 			File file = new File(Config.APP_DIR_PATH + "/"
 					+ thisLP.getPicPath());
 			if (file.exists()) {
-				Bitmap bm = BitmapFactory.decodeFile(thisLP.getPicPath());
+				Bitmap bm = BitmapFactory.decodeFile(Config.APP_DIR_PATH + "/"
+						+ thisLP.getPicPath());
 				item_imgPic.setImageBitmap(bm);
 			} else {
 				// 没有楼盘图片就显示默认的图片

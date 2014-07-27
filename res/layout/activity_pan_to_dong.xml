@@ -16,7 +16,8 @@
         <ListView
             android:id="@+id/lv_loupan_list"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:scrollbars="none" />
     </RelativeLayout>
 
     <RelativeLayout
