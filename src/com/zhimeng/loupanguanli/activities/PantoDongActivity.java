@@ -6,14 +6,15 @@ import android.app.Activity;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
-import android.opengl.Visibility;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -40,6 +41,7 @@ public class PantoDongActivity extends Activity {
 	private LouPan louPan;// 从主页面跳转过来所带的参数
 	private ArrayList<LouPan> louPanList;// 所有楼盘信息
 	private ArrayList<String> louPanNameList; // 楼盘名称列表
+	private MAdapter mAdapter;
 
 	ArrayList<Button> btns = new ArrayList<Button>();// 坐标指示按钮，主要用于管理按钮的删除
 
@@ -60,6 +62,7 @@ public class PantoDongActivity extends Activity {
 		louPan = (LouPan) getIntent().getSerializableExtra("loupan");
 		louPanList = louPanDao.getAll();
 		int total = louPanList.size();
+		louPanNameList = new ArrayList<String>();
 		for (int i = 0; i < total; i++) {
 			louPanNameList.add(louPanList.get(i).getName());
 		}
@@ -73,15 +76,17 @@ public class PantoDongActivity extends Activity {
 		tvLouPanDetail = (TextView) findViewById(R.id.tv_loupan_detail);
 
 		// ListView设置适配器
-		lvLouPans.setAdapter(new ArrayAdapter<String>(PantoDongActivity.this,
-				android.R.layout.simple_list_item_activated_1,
-				android.R.id.text1, louPanNameList));
+		mAdapter = new MAdapter();
+		lvLouPans.setAdapter(mAdapter);
 
 		// ListView滚动到指定位置，并指定背景颜色
 		int count = louPanNameList.size();
 		for (int i = 0; i < count; i++) {
 			if (louPan.getName().equals(louPanNameList.get(i))) {
-				lvLouPans.getChildAt(i).setBackgroundColor(Color.GRAY);
+				// 测试发现在onCreate方法中调用ListView的getChildAt方法返回的是null，
+				// 所以用ListView.getChildAt(int).setBackgroundColor(int)的方法行不通
+				mAdapter.setSelectItem(i);
+				mAdapter.notifyDataSetChanged();
 				lvLouPans.setSelection(i);
 				break;
 			}
@@ -117,11 +122,8 @@ public class PantoDongActivity extends Activity {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				// 选中高亮显示
-				int childCount = parent.getChildCount();
-				for (int i = 0; i < childCount; i++) {
-					parent.getChildAt(i).setBackgroundColor(Color.WHITE);
-				}
-				parent.getChildAt(position).setBackgroundColor(Color.GRAY);
+				mAdapter.setSelectItem(position);
+				mAdapter.notifyDataSetChanged();
 				// 获取楼盘信息并显示
 				LouPan lp = louPanList.get(position);
 				imgViewPic.setImageBitmap(BitmapFactory
@@ -180,4 +182,53 @@ public class PantoDongActivity extends Activity {
 			pw.showAsDropDown(v);
 		}
 	};
+
+	// 自定义ListView的适配器
+	private class MAdapter extends BaseAdapter {
+
+		private int selectItem = -1;
+
+		// 设置当前选中的位置，用于高亮显示的实现
+		public void setSelectItem(int selectItem) {
+			this.selectItem = selectItem;
+		}
+
+		@Override
+		public int getCount() {
+			return louPanNameList.size();
+		}
+
+		@Override
+		public Object getItem(int position) {
+			return louPanNameList.get(position);
+		}
+
+		@Override
+		public long getItemId(int position) {
+			return position;
+		}
+
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {
+			TextView tv = null;
+			if (convertView == null) {
+				LayoutInflater mInflater = LayoutInflater
+						.from(PantoDongActivity.this);
+				convertView = mInflater.inflate(R.layout.item_list_pan_to_dong,
+						null);
+				tv = (TextView) convertView.findViewById(R.id.tv_name);
+				convertView.setTag(tv);
+			} else {
+				tv = (TextView) convertView.getTag();
+			}
+			tv.setText(louPanNameList.get(position));
+			if (position == selectItem) {
+				convertView.setBackgroundColor(Color.GRAY);
+			} else {
+				convertView.setBackgroundColor(Color.WHITE);
+			}
+			return convertView;
+		}
+
+	}
 }
