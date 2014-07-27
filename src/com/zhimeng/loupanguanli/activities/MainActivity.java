@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 import com.zhimeng.loupanguanli.R;
+import com.zhimeng.loupanguanli.config.Config;
 import com.zhimeng.loupanguanli.dao.LouPanDAO;
 import com.zhimeng.loupanguanli.database.DBHelper;
 import com.zhimeng.loupanguanli.entity.LouPan;
@@ -29,6 +30,7 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends Activity {
 	private Button btnCreate;
@@ -94,6 +96,37 @@ public class MainActivity extends Activity {
 						null);// 长按击时弹出的菜单对话框
 				LouPan thisLP = (LouPan) loupans.get(position);// 触发本事件的楼盘对象
 
+				// 设置menu中按钮的点击事件
+
+				// 编辑楼盘文件信息的按钮
+				Button btnEditLP_info = (Button) v_menu
+						.findViewById(R.id.btnEditLP_info);
+				btnEditLP_info.setOnClickListener(new View.OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						// TODO Auto-generated method
+						Toast.makeText(MainActivity.this, btnEditLP_info
+								.getText().toString(), 2);
+					}
+				});
+
+				// 编辑楼盘图片的按钮
+				Button btnEditLP_pic = (Button) v_menu
+						.findViewById(R.id.btnEditLP_pic);
+
+				// 编辑楼栋文件信息的按钮
+				Button btnEditLD_info = (Button) v_menu
+						.findViewById(R.id.btnEditLD_info);
+
+				// 编辑楼栋坐标分布的按钮
+				Button btnEditLD_zuobiao = (Button) v_menu
+						.findViewById(R.id.btnEditLD_zuobiao);
+
+				// 删除楼盘的按钮
+				Button btndelete_loupan = (Button) v_menu
+						.findViewById(R.id.btndelete_loupan);
+
 				AlertDialog.Builder builder_Dialog = new AlertDialog.Builder(
 						MainActivity.this);
 				builder_Dialog.setView(v_menu);
@@ -106,7 +139,7 @@ public class MainActivity extends Activity {
 
 		});
 
-		// 设置gridview的单击事件
+		// 设置gratify的单击事件
 		/*
 		 * gvLoupan.setOnItemClickListener(new OnItemClickListener() {
 		 * 
@@ -172,7 +205,8 @@ public class MainActivity extends Activity {
 			ImageView item_imgPic = (ImageView) view
 					.findViewById(R.id.item_imgPic);
 
-			File file = new File(thisLP.getPicPath());
+			File file = new File(Config.APP_DIR_PATH + "/"
+					+ thisLP.getPicPath());
 			if (file.exists()) {
 				Bitmap bm = BitmapFactory.decodeFile(thisLP.getPicPath());
 				item_imgPic.setImageBitmap(bm);
