@@ -4,6 +4,9 @@ import com.zhimeng.loupanguanli.util.StorageUtil;
 
 import android.os.Environment;
 
+/*
+ * 程序配置类
+ */
 public class Config {
 
 	// 应用程序名称
