@@ -50,7 +50,10 @@ public class LouDongDAO {
 	/**
 	 * 判断指定名称的楼栋是否存在
 	 * 
-	 * @param name 楼栋名称
+	 * @param name
+	 *            楼栋名称
+	 * @param loupanId
+	 *            楼盘id
 	 * @return
 	 */
 	public boolean isNameExisted(String name, Integer loupanId) {

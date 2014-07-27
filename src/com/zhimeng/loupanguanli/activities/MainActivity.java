@@ -18,9 +18,13 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.text.style.RelativeSizeSpan;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
@@ -42,7 +46,6 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-
 		initViews();
 
 	}
@@ -62,31 +65,7 @@ public class MainActivity extends Activity {
 		// 通过Adapter显示数据
 		gvLoupan.setAdapter(new MyAdapter(lpdao.getAll()));
 
-		/*
-		 * 
-		 * // 编辑楼盘文件信息的按钮 Button btnEditLP_info = (Button) v_menu
-		 * .findViewById(R.id.btnEditLP_info);
-		 * btnEditLP_info.setOnClickListener(new View.OnClickListener() {
-		 * 
-		 * @Override public void onClick(View v) { // TODO Auto-generated method
-		 * stub
-		 * 
-		 * } });
-		 * 
-		 * // 编辑楼盘图片的按钮 Button btnEditLP_pic = (Button)
-		 * v_menu.findViewById(R.id.btnEditLP_pic);
-		 * 
-		 * // 编辑楼栋文件信息的按钮 Button btnEditLD_info = (Button) v_menu
-		 * .findViewById(R.id.btnEditLD_info);
-		 * 
-		 * // 编辑楼栋坐标分布的按钮 Button btnEditLD_zuobiao = (Button) v_menu
-		 * .findViewById(R.id.btnEditLD_zuobiao);
-		 * 
-		 * // 删除楼盘的按钮 Button btndelete_loupan = (Button) v_menu
-		 * .findViewById(R.id.btndelete_loupan);
-		 */
 		// 设置gridview的长按事件
-
 		gvLoupan.setOnItemLongClickListener(new OnItemLongClickListener() {
 
 			@Override
@@ -98,48 +77,67 @@ public class MainActivity extends Activity {
 
 				// 设置menu中按钮的点击事件
 
-				// 编辑楼盘文件信息的按钮
-				Button btnEditLP_info = (Button) v_menu
-						.findViewById(R.id.btnEditLP_info);
-				btnEditLP_info.setOnClickListener(new View.OnClickListener() {
+				// 编辑楼盘的按钮
+				Button btnEditLP = (Button) v_menu.findViewById(R.id.btnEditLP);
+				btnEditLP.setOnClickListener(new View.OnClickListener() {
 
 					@Override
 					public void onClick(View v) {
 						// TODO Auto-generated method
-						Toast.makeText(MainActivity.this, btnEditLP_info
-								.getText().toString(), 2);
+
 					}
 				});
 
-				// 编辑楼盘图片的按钮
-				Button btnEditLP_pic = (Button) v_menu
-						.findViewById(R.id.btnEditLP_pic);
+				// 删除 楼盘的按钮
+				Button btnDeleteLP = (Button) v_menu
+						.findViewById(R.id.btnDeleteLP);
+				btnDeleteLP.setOnClickListener(new View.OnClickListener() {
 
-				// 编辑楼栋文件信息的按钮
-				Button btnEditLD_info = (Button) v_menu
-						.findViewById(R.id.btnEditLD_info);
+					@Override
+					public void onClick(View v) {
+						// TODO Auto-generated method
 
-				// 编辑楼栋坐标分布的按钮
-				Button btnEditLD_zuobiao = (Button) v_menu
-						.findViewById(R.id.btnEditLD_zuobiao);
+					}
+				});
 
-				// 删除楼盘的按钮
-				Button btndelete_loupan = (Button) v_menu
-						.findViewById(R.id.btndelete_loupan);
+				// 弹出框对象
+				Dialog dialog = new Dialog(MainActivity.this);
+				// 设置弹出框要弹出的视图内容
+				dialog.setContentView(v_menu);
 
-				AlertDialog.Builder builder_Dialog = new AlertDialog.Builder(
-						MainActivity.this);
-				builder_Dialog.setView(v_menu);
-				builder_Dialog.show();
+				// h获取弹出框的窗体对象，可以通过该对象对其参数进行配置，更新弹出窗口的属性(包括作保和宽高)
+				Window dialogWindow = dialog.getWindow();
 
-				// Intent intMenu=new Intent(this,v_menu);
+				// 获取窗体参数对象
+				WindowManager.LayoutParams lp = dialogWindow.getAttributes();
 
+				// 设置窗体的X坐标、Y坐标边界位置，（这里分别为手机屏幕的最左边和最上边）
+				dialogWindow.setGravity(Gravity.LEFT | Gravity.TOP);
+
+				// 获取标题栏控件
+				View rl = MainActivity.this.findViewById(R.id.rl);
+
+				// 设置弹出窗的坐标值与被点击的控件的坐标一致(x,y值将成为与边界的相对坐标值)
+				lp.x = (int) view.getX();
+				lp.y = (int) (view.getY() + rl.getHeight());
+
+				lp.alpha = 0.7f;// 设置弹出窗的透明度
+
+				// 设置弹出窗的宽高与被点击的控件的坐标一致
+				lp.width = view.getWidth();
+				lp.height = view.getHeight();
+
+				// 更新弹出窗的窗体属性
+				dialogWindow.setAttributes(lp);
+
+				// 显示弹出窗体
+				dialog.show();
 				return false;
 			}
 
 		});
 
-		// 设置gratify的单击事件
+		// 设置gridview的单击事件
 		/*
 		 * gvLoupan.setOnItemClickListener(new OnItemClickListener() {
 		 * 
