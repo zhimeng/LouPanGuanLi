@@ -13,6 +13,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.text.style.RelativeSizeSpan;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -39,9 +40,9 @@ import com.zhimeng.loupanguanli.database.DBHelper;
 import com.zhimeng.loupanguanli.entity.LouPan;
 
 public class MainActivity extends Activity {
-	private Button btnCreate;//添加新楼盘按钮
-	private Button btn_search;//搜索楼盘按钮
-	private EditText et_loupan_keyword;//搜索文本框
+	private Button btnCreate;// 添加新楼盘按钮
+	private Button btn_search;// 搜索楼盘按钮
+	private EditText et_loupan_keyword;// 搜索文本框
 	private GridView gvLoupan;// 楼盘信息gridview
 	private LayoutInflater inflater;// 将xml布局文件转化为view对象的服务类
 	private ArrayList<LouPan> loupans;// gridview操作的楼盘集合
@@ -99,6 +100,12 @@ public class MainActivity extends Activity {
 						Toast.makeText(MainActivity.this, "sadas",
 								Toast.LENGTH_SHORT).show();
 
+						Intent intent0 = new Intent(MainActivity.this,
+								EditActivity.class);
+						Bundle bl0 = new Bundle();
+						bl0.putSerializable("loupan", thisLP);
+						intent0.putExtras(bl0);
+						startActivity(intent0);// 进入楼盘修改界面
 					}
 				});
 
@@ -122,13 +129,7 @@ public class MainActivity extends Activity {
 									@Override
 									public void onClick(DialogInterface dialog,
 											int which) {
-										// TODO Auto-generated method stub
-										lpdao.delete(
-												"delete from "
-														+ DBColumns.LouPanColumns.TB_NAME
-														+ " where id=?",
-												new String[] { String
-														.valueOf(thisLP.getId()) });
+										lpdao.delete(thisLP);
 										// 关闭弹出框，刷新数据显示
 										dog.dismiss();
 										loupans.remove(index);
@@ -195,6 +196,24 @@ public class MainActivity extends Activity {
 
 		});
 
+		/**
+		 * 点击楼盘查看
+		 */
+		gvLoupan.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				Intent intent1 = new Intent(MainActivity.this,
+						PantoDongActivity.class);
+				Bundle bl1 = new Bundle();
+				bl1.putSerializable("loupan", loupans.get(position));
+				intent1.putExtras(bl1);
+				startActivity(intent1);// 进入楼盘查看界面
+			}
+
+		});
+
 		btnCreate = (Button) MainActivity.this.findViewById(R.id.btn_create);
 		// 点击创建
 		btnCreate.setOnClickListener(new View.OnClickListener() {
@@ -206,18 +225,19 @@ public class MainActivity extends Activity {
 				startActivity(intent);
 			}
 		});
-		
-		btn_search=(Button) MainActivity.this.findViewById(R.id.btn_search);
-		et_loupan_keyword=(EditText) MainActivity.this.findViewById(R.id.et_loupan_keyword);
-		//点击搜索，重新刷新页面
+
+		btn_search = (Button) MainActivity.this.findViewById(R.id.btn_search);
+		et_loupan_keyword = (EditText) MainActivity.this
+				.findViewById(R.id.et_loupan_keyword);
+		// 点击搜索，重新刷新页面
 		btn_search.setOnClickListener(new View.OnClickListener() {
-			
+
 			@Override
-			public void onClick(View v) {		
-				loupans=lpdao.getLPlistByName(et_loupan_keyword.getText().toString().trim());
+			public void onClick(View v) {
+				loupans = lpdao.getLPlistByName(et_loupan_keyword.getText()
+						.toString().trim());
 				adpter.notifyDataSetChanged();
-				
-				
+
 			}
 		});
 	}
