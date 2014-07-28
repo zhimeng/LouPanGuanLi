@@ -179,18 +179,29 @@ public class LouPanDAO {
 	 *            ?的sql语句
 	 * @param params参数数组
 	 */
-	public void update(String sql, Object[] params) {
+	public void update(LouPan LP) {
+		String sql = "update " + DBColumns.LouPanColumns.TB_NAME + " set "
+				+ DBColumns.LouPanColumns.ADDRESS + "=? ,"
+				+ DBColumns.LouPanColumns.NAME + "=? ,"
+				+ DBColumns.LouPanColumns.PIC_PATH + "=? ,"
+				+ DBColumns.LouPanColumns.REMARK + "=? " + " where "
+				+ DBColumns.LouPanColumns.ID + "=?";
+		String[] params = new String[] { LP.getAddress(), LP.getName(),
+				LP.getPicPath(),LP.getRemark(), String.valueOf(LP.getId()) };
+
 		dbHelper.getReadableDatabase().execSQL(sql, params);
 	}
 
 	/**
 	 * 删除数据操作
 	 * 
-	 * @param sql包含参数占位符
-	 *            ?的sql语句
-	 * @param params参数数组
+	 * @param LP楼盘对象
 	 */
-	public void delete(String sql, Object[] params) {
+	public void delete(LouPan LP) {
+		String sql = "delete from " + DBColumns.LouPanColumns.TB_NAME
+				+ " where id=?";
+		String[] params = new String[] { String.valueOf(LP.getId()) };
+
 		dbHelper.getReadableDatabase().execSQL(sql, params);
 	}
 
