@@ -198,22 +198,36 @@ public class LouDongDAO {
 	/**
 	 * 更新数据操作
 	 * 
-	 * @param sql包含参数占位符
-	 *            ?的sql语句
-	 * @param params参数数组
+	 * @param LD楼栋对象
 	 */
-	public void Update(String sql, Object[] params) {
+	public void Update(LouDong LD) {
+		String sql = "update " + DBColumns.LouDongColumns.TB_NAME + " set "
+				+ DBColumns.LouDongColumns.LAYERS + "=? ,"
+				+ DBColumns.LouDongColumns.LOUPAN_ID + "=? ,"
+				+ DBColumns.LouDongColumns.NAME + "=? ,"
+				+ DBColumns.LouDongColumns.NUMBER + "=? ,"
+				+ DBColumns.LouDongColumns.REMARK + "=? ,"
+				+ DBColumns.LouDongColumns.SETS + "=? " + " where "
+				+ DBColumns.LouDongColumns.ID + "=?";
+		String[] params = new String[] { String.valueOf(LD.getLayers()),
+				String.valueOf(LD.getLoupanId()), LD.getName(),
+				String.valueOf(LD.getNumber()), LD.getRemark(),
+				String.valueOf(LD.getSets()), String.valueOf(LD.getId()) };
+
 		dbHelper.getReadableDatabase().execSQL(sql, params);
+
 	}
 
 	/**
 	 * 删除数据操作
 	 * 
-	 * @param sql包含参数占位符
-	 *            ?的sql语句
-	 * @param params参数数组
+	 * @param LD楼栋对象
 	 */
-	public void Delete(String sql, Object[] params) {
+	public void Delete(LouDong LD) {
+		String sql = "delete from " + DBColumns.LouDongColumns.TB_NAME
+				+ " where id=?";
+		String[] params = new String[] { String.valueOf(LD.getId()) };
+
 		dbHelper.getReadableDatabase().execSQL(sql, params);
 	}
 }

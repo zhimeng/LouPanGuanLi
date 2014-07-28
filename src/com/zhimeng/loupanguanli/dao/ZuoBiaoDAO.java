@@ -181,6 +181,18 @@ public class ZuoBiaoDAO {
 	}
 
 	/**
+	 * 删除坐标对象
+	 * @param zb 坐标对象
+	 */
+	public void Delete(ZuoBiao zb) {
+		String sql = "delete from " + DBColumns.ZuoBiaoColumns.TB_NAME
+				+ " where id=?";
+		String[] params = new String[] { String.valueOf(zb.getId()) };
+
+		dbHelper.getReadableDatabase().execSQL(sql, params);
+	}
+
+	/**
 	 * 保存楼栋坐标值
 	 * 
 	 * @param zb

@@ -175,9 +175,7 @@ public class LouPanDAO {
 	/**
 	 * 更新数据操作
 	 * 
-	 * @param sql包含参数占位符
-	 *            ?的sql语句
-	 * @param params参数数组
+	 * @param LP楼盘对象
 	 */
 	public void update(LouPan LP) {
 		String sql = "update " + DBColumns.LouPanColumns.TB_NAME + " set "
@@ -187,7 +185,7 @@ public class LouPanDAO {
 				+ DBColumns.LouPanColumns.REMARK + "=? " + " where "
 				+ DBColumns.LouPanColumns.ID + "=?";
 		String[] params = new String[] { LP.getAddress(), LP.getName(),
-				LP.getPicPath(),LP.getRemark(), String.valueOf(LP.getId()) };
+				LP.getPicPath(), LP.getRemark(), String.valueOf(LP.getId()) };
 
 		dbHelper.getReadableDatabase().execSQL(sql, params);
 	}
@@ -204,5 +202,7 @@ public class LouPanDAO {
 
 		dbHelper.getReadableDatabase().execSQL(sql, params);
 	}
+	
+	
 
 }
