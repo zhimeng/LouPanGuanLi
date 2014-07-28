@@ -97,15 +97,13 @@ public class MainActivity extends Activity {
 
 					@Override
 					public void onClick(View v) {
-						Toast.makeText(MainActivity.this, "sadas",
-								Toast.LENGTH_SHORT).show();
-
 						Intent intent0 = new Intent(MainActivity.this,
 								EditActivity.class);
 						Bundle bl0 = new Bundle();
 						bl0.putSerializable("loupan", thisLP);
 						intent0.putExtras(bl0);
 						startActivity(intent0);// 进入楼盘修改界面
+						dog.dismiss();// 关闭弹出框
 					}
 				});
 
