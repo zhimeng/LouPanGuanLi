@@ -14,8 +14,8 @@
             android:layout_height="wrap_content"
             android:text="编号：" />
 
-        <TextView
-            android:id="@+id/tv_number"
+        <EditText
+            android:id="@+id/et_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="楼  栋  编  号" />
@@ -33,8 +33,8 @@
             android:layout_height="wrap_content"
             android:text="名称：" />
 
-        <TextView
-            android:id="@+id/tv_name"
+        <EditText
+            android:id="@+id/et_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="楼  栋  名  称" />
@@ -52,8 +52,8 @@
             android:layout_height="wrap_content"
             android:text="层数：" />
 
-        <TextView
-            android:id="@+id/tv_layers"
+        <EditText
+            android:id="@+id/et_layers"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="层  数" />
@@ -71,8 +71,8 @@
             android:layout_height="wrap_content"
             android:text="套数：" />
 
-        <TextView
-            android:id="@+id/tv_sets"
+        <EditText
+            android:id="@+id/et_sets"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="套  数" />
@@ -90,8 +90,8 @@
             android:layout_height="wrap_content"
             android:text="备注：" />
 
-        <TextView
-            android:id="@+id/tv_remark"
+        <EditText
+            android:id="@+id/et_remark"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="备  注" />
