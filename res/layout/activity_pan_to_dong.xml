@@ -33,12 +33,16 @@
             android:scaleType="centerInside"
             android:src="@drawable/pic_default" />
 
-        <TextView
+        <com.zhimeng.loupanguanli.widget.AlwaysMarqueeTextView
             android:id="@+id/tv_loupan_detail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:background="#80000000"
+            android:ellipsize="marquee"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:marqueeRepeatLimit="marquee_forever"
             android:padding="2dp"
             android:scrollHorizontally="true"
             android:singleLine="true"

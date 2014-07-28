@@ -15,6 +15,7 @@ public class StorageUtil {
 				Environment.MEDIA_MOUNTED);
 	}
 
+	// 将Bitmap对象保存到外设中，大图片保存可能存在问题，暂时未测试
 	public static void saveBitmapToSDCard(Bitmap bitmap, String path) {
 		// 创建文件对象，用来存储新的图像文件
 		File file = new File(path);

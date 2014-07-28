@@ -13,7 +13,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -31,12 +30,13 @@ import com.zhimeng.loupanguanli.dao.ZuoBiaoDAO;
 import com.zhimeng.loupanguanli.entity.LouDong;
 import com.zhimeng.loupanguanli.entity.LouPan;
 import com.zhimeng.loupanguanli.entity.ZuoBiao;
+import com.zhimeng.loupanguanli.widget.AlwaysMarqueeTextView;
 
 public class PantoDongActivity extends Activity {
 	private ListView lvLouPans;
 	private RelativeLayout rlLoc;
 	private ImageView imgViewPic;
-	private TextView tvLouPanDetail;
+	private AlwaysMarqueeTextView tvLouPanDetail;
 
 	private LouPan louPan;// 从主页面跳转过来所带的参数
 	private ArrayList<LouPan> louPanList;// 所有楼盘信息
@@ -73,7 +73,7 @@ public class PantoDongActivity extends Activity {
 		lvLouPans = (ListView) findViewById(R.id.lv_loupan_list);
 		rlLoc = (RelativeLayout) findViewById(R.id.rl_loc);
 		imgViewPic = (ImageView) findViewById(R.id.imgv_pic);
-		tvLouPanDetail = (TextView) findViewById(R.id.tv_loupan_detail);
+		tvLouPanDetail = (AlwaysMarqueeTextView) findViewById(R.id.tv_loupan_detail);
 
 		// ListView设置适配器
 		mAdapter = new MAdapter();
@@ -129,7 +129,7 @@ public class PantoDongActivity extends Activity {
 				imgViewPic.setImageBitmap(BitmapFactory
 						.decodeFile(Config.APP_DIR_PATH + "/" + lp.getPicPath()));
 				tvLouPanDetail.setText("楼盘名称：" + lp.getName() + "；楼盘地址："
-						+ lp.getAddress() + "；备注：" + lp.getRemark());
+						+ lp.getAddress() + "；备注：" + lp.getRemark() + "。");
 				// 楼栋指示按钮显示
 				int zsCount = btns.size();
 				for (int i = 0; i < zsCount; i++) {
@@ -165,18 +165,19 @@ public class PantoDongActivity extends Activity {
 			LouDong ld = (LouDong) v.getTag();
 			View contentView = LayoutInflater.from(PantoDongActivity.this)
 					.inflate(R.layout.layout_loudong_detail, null);
-			((TextView) contentView.findViewById(R.id.tv_number)).setText(ld
-					.getNumber());
+			((TextView) contentView.findViewById(R.id.tv_number))
+					.setText(String.valueOf(ld.getNumber()));
 			((TextView) contentView.findViewById(R.id.tv_name)).setText(ld
 					.getName());
-			((TextView) contentView.findViewById(R.id.tv_layers)).setText(ld
-					.getLayers());
-			((TextView) contentView.findViewById(R.id.tv_sets)).setText(ld
-					.getSets());
+			((TextView) contentView.findViewById(R.id.tv_layers))
+					.setText(String.valueOf(ld.getLayers()));
+			((TextView) contentView.findViewById(R.id.tv_sets)).setText(String
+					.valueOf(ld.getSets()));
 			((TextView) contentView.findViewById(R.id.tv_remark)).setText(ld
 					.getRemark());
 			PopupWindow pw = new PopupWindow(contentView,
 					LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+			// 点击PopupWindow外部消失
 			pw.setBackgroundDrawable(new BitmapDrawable());
 			pw.setOutsideTouchable(true);
 			pw.showAsDropDown(v);

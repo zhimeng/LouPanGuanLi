@@ -150,6 +150,8 @@ public class ZuoBiaoDAO {
 				+ DBColumns.ZuoBiaoColumns.X + "," + DBColumns.ZuoBiaoColumns.Y
 				+ "," + DBColumns.ZuoBiaoColumns.LOUDONG_ID + ","
 				+ DBColumns.ZuoBiaoColumns.LOUPAN_ID + ") values(?,?,?,?)";
+		System.out.println(String.valueOf(zb.getX()) + "Insert"
+				+ String.valueOf(zb.getY()));
 		String[] params = new String[] { String.valueOf(zb.getX()),
 				String.valueOf(zb.getY()), String.valueOf(zb.getLoudongId()),
 				String.valueOf(zb.getLoupanId()) };
@@ -194,6 +196,8 @@ public class ZuoBiaoDAO {
 					+ String.valueOf(DBColumns.ZuoBiaoColumns.LOUDONG_ID)
 					+ "=? and "
 					+ String.valueOf(DBColumns.ZuoBiaoColumns.LOUPAN_ID) + "=?";
+			System.out.println(String.valueOf(zb.getX()) + "Save"
+					+ String.valueOf(zb.getY()));
 			params = new String[] { String.valueOf(zb.getX()),
 					String.valueOf(zb.getY()),
 					String.valueOf(zb.getLoudongId()),

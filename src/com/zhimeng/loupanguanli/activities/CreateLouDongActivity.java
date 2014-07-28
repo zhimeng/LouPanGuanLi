@@ -91,8 +91,8 @@ public class CreateLouDongActivity extends Activity {
 							.getLayoutParams();
 					louDongDao.Insert(louDong);
 					louDong = louDongDao.GetLouDongByName(name, louPan.getId());
-					zuoBiaoDao.saveZuoBiao(new ZuoBiao(mParams.leftMargin,
-							mParams.topMargin, louDong.getId(), louPan.getId()));
+					zuoBiaoDao.Insert(new ZuoBiao(mParams.leftMargin,
+							mParams.topMargin, louPan.getId(), louDong.getId()));
 					btn.setOnTouchListener(new MOnTouchListener(louPan.getId(),
 							louDong.getId()));
 				} else {
@@ -116,7 +116,7 @@ public class CreateLouDongActivity extends Activity {
 		private int _xDelta, _yDelta;// 父控件的坐标
 
 		public MOnTouchListener(Integer loupanId, Integer loudongId) {
-			this.loudongId = loupanId;
+			this.loupanId = loupanId;
 			this.loudongId = loudongId;
 		}
 

@@ -27,21 +27,25 @@ public class PhotoRequestUtil {
 	}
 
 	// 裁切图片
-	public static void cropPic(Uri uri, Activity activity) {
+	public static void cropPic(Uri srcUri, Uri desUri, Activity activity) {
 		// 裁剪图片意图
 		Intent intent = new Intent("com.android.camera.action.CROP");
-		intent.setDataAndType(uri, "image/*");
+		intent.setDataAndType(srcUri, "image/*");
 		// crop为true是设置在开启的intent中设置显示的view可以剪裁
 		intent.putExtra("crop", "true");
 		// 裁剪框的比例，1:1
-		intent.putExtra("aspectX", 1);
-		intent.putExtra("aspectY", 1);
+		intent.putExtra("aspectX", 7);
+		intent.putExtra("aspectY", 5);
 		// 裁剪后输出图片的尺寸大小
-		intent.putExtra("outputX", 300);
-		intent.putExtra("outputY", 300);
+		intent.putExtra("outputX", 980);
+		intent.putExtra("outputY", 700);
+		intent.putExtra("scale", true);
 		// 图片格式
 		intent.putExtra("outputFormat", "JPEG");
-		intent.putExtra("return-data", true);
+		// 设置不返回Bitmap对象
+		intent.putExtra("return-data", false);
+		// 设置剪切后的文件输出路径
+		intent.putExtra(MediaStore.EXTRA_OUTPUT, desUri);
 		// 取消人脸识别
 		intent.putExtra("noFaceDetection", true);
 		activity.startActivityForResult(intent, PHOTO_REQUEST_CUT);

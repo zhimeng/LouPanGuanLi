@@ -4,7 +4,6 @@ import java.io.File;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -33,8 +32,8 @@ public class CreateLouPanActivity extends Activity {
 
 	// 如果用户选择拍照上传图片，则cameraFile指示图片存取路径
 	private File cameraFile = null;
-	// 用户选取的图片
-	private Bitmap bitmap = null;
+	// 剪切的图片名
+	private String cutPicName = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -93,14 +92,14 @@ public class CreateLouPanActivity extends Activity {
 			public void onClick(View v) {
 				LouPanDAO louPanDao = new LouPanDAO(CreateLouPanActivity.this);
 				String nameStr = etName.getText().toString().trim();
-				if ("".equals(nameStr) || bitmap == null) {
+				if ("".equals(nameStr) || cutPicName == null) {
 					Toast.makeText(CreateLouPanActivity.this, "图片&楼盘名均不能为空",
 							Toast.LENGTH_SHORT).show();
 				} else if (louPanDao.isNameExisted(nameStr)) {
 					Toast.makeText(CreateLouPanActivity.this, "楼盘名已存在",
 							Toast.LENGTH_SHORT).show();
 				} else {
-					String picPath = UUIDUtil.getUStr();
+					// String picPath = UUIDUtil.getUStr();
 
 					String addressStr = etAddress.getText().toString().trim();
 					String remarkStr = etRemark.getText().toString().trim();
@@ -110,10 +109,11 @@ public class CreateLouPanActivity extends Activity {
 						if (!(file = new File(Config.APP_DIR_PATH)).exists()) {
 							file.mkdirs();
 						}
-						StorageUtil.saveBitmapToSDCard(bitmap,
-								Config.APP_DIR_PATH + "/" + picPath);
+						// 将Bitmap保存到SDCard中，大图片保存可能存在问题，暂时未测试
+						// StorageUtil.saveBitmapToSDCard(bitmap,
+						// Config.APP_DIR_PATH + "/" + picPath);
 						LouPan louPan = new LouPan(nameStr, addressStr,
-								remarkStr, picPath);
+								remarkStr, cutPicName);
 						louPanDao.insert(louPan);
 						louPan = louPanDao.getLouPanByName(nameStr);
 						// 跳转到创建楼栋页面
@@ -146,21 +146,46 @@ public class CreateLouPanActivity extends Activity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		switch (requestCode) {
 		case PhotoRequestUtil.PHOTO_REQUEST_GALLERY:
-			if (data != null)
-				PhotoRequestUtil.cropPic(data.getData(),
-						CreateLouPanActivity.this);
+			if (data != null) {
+				cutPicName = UUIDUtil.getUStr();
+				if (Config.APP_DIR_PATH == null) {
+					Toast.makeText(CreateLouPanActivity.this, "SDCard不可用",
+							Toast.LENGTH_SHORT).show();
+				} else {
+					File file = null;
+					if (!(file = new File(Config.APP_DIR_PATH)).exists()) {
+						file.mkdirs();
+					}
+					Uri desUri = Uri.parse("file:///" + Config.APP_DIR_PATH
+							+ "/" + cutPicName);
+					PhotoRequestUtil.cropPic(data.getData(), desUri,
+							CreateLouPanActivity.this);
+				}
+			}
 			break;
 		case PhotoRequestUtil.PHOTO_REQUEST_CAREMA:
-			PhotoRequestUtil.cropPic(Uri.fromFile(cameraFile),
-					CreateLouPanActivity.this);
+			cutPicName = UUIDUtil.getUStr();
+			if (Config.APP_DIR_PATH == null) {
+				Toast.makeText(CreateLouPanActivity.this, "SDCard不可用",
+						Toast.LENGTH_SHORT).show();
+			} else {
+				File file = null;
+				if (!(file = new File(Config.APP_DIR_PATH)).exists()) {
+					file.mkdirs();
+				}
+				Uri desUri = Uri.parse("file:///" + Config.APP_DIR_PATH + "/"
+						+ cutPicName);
+				PhotoRequestUtil.cropPic(Uri.fromFile(cameraFile), desUri,
+						CreateLouPanActivity.this);
+			}
 			break;
 		case PhotoRequestUtil.PHOTO_REQUEST_CUT:
-			if (data != null) {
-				bitmap = data.getParcelableExtra("data");
-			}
-			// 删除缓存文件
-			if (cameraFile != null && cameraFile.exists())
-				cameraFile.delete();
+			// if (data != null) {
+			// bitmap = data.getParcelableExtra("data");
+			// }
+			// // 删除缓存文件
+			// if (cameraFile != null && cameraFile.exists())
+			// cameraFile.delete();
 			break;
 		default:
 			break;

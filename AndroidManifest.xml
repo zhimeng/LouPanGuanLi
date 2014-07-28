@@ -22,7 +22,7 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen" >
+        android:theme="@android:style/Theme.DeviceDefault.Light.NoActionBar.Fullscreen" >
         <uses-library android:name="android.test.runner" />
 
         <activity
@@ -41,7 +41,7 @@
         <activity
             android:name="com.zhimeng.loupanguanli.activities.CreateLouPanActivity"
             android:screenOrientation="landscape"
-            android:theme="@style/MDialog" >
+            android:theme="@android:style/Theme.DeviceDefault.Light.Dialog" >
         </activity>
         <activity
             android:name="com.zhimeng.loupanguanli.activities.CreateLouDongActivity"
