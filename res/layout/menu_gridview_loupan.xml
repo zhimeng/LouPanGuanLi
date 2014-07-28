@@ -6,17 +6,17 @@
     android:orientation="vertical" >
 
     <Button
-        android:id="@+id/btnEditLP"
+        android:id="@+id/itemEditLP"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/edit_loupan_info" />
-
-    
+        android:text="@string/edit_loupan_info"
+        android:textSize="6pt" />
 
     <Button
-        android:id="@+id/btnDeleteLP"
+        android:id="@+id/itemDeleteLP"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/delete_loupan" />
+        android:text="@string/delete_loupan"
+        android:textSize="6pt" />
 
 </LinearLayout>

@@ -5,10 +5,13 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.style.RelativeSizeSpan;
 import android.view.Gravity;
@@ -22,20 +25,28 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.zhimeng.loupanguanli.R;
 import com.zhimeng.loupanguanli.config.Config;
 import com.zhimeng.loupanguanli.dao.LouPanDAO;
+import com.zhimeng.loupanguanli.database.DBColumns;
+import com.zhimeng.loupanguanli.database.DBHelper;
 import com.zhimeng.loupanguanli.entity.LouPan;
 
 public class MainActivity extends Activity {
-	private Button btnCreate;
+	private Button btnCreate;//添加新楼盘按钮
+	private Button btn_search;//搜索楼盘按钮
+	private EditText et_loupan_keyword;//搜索文本框
 	private GridView gvLoupan;// 楼盘信息gridview
 	private LayoutInflater inflater;// 将xml布局文件转化为view对象的服务类
-	private ArrayList loupans;// gridview操作的楼盘集合
+	private ArrayList<LouPan> loupans;// gridview操作的楼盘集合
+	private MyAdapter adpter;// 绑定到gridview的Adpter对象
+	private LouPanDAO lpdao;// 楼盘数据库操作类
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -55,10 +66,12 @@ public class MainActivity extends Activity {
 		gvLoupan = (GridView) MainActivity.this.findViewById(R.id.gv_loupan);
 
 		// 读取数据库数据集合
-		LouPanDAO lpdao = new LouPanDAO(MainActivity.this);
+		lpdao = new LouPanDAO(MainActivity.this);
 
 		// 通过Adapter显示数据
-		gvLoupan.setAdapter(new MyAdapter(lpdao.getAll()));
+		loupans = lpdao.getAll();
+		adpter = new MyAdapter();
+		gvLoupan.setAdapter(adpter);
 
 		// 设置gridview的长按事件
 		gvLoupan.setOnItemLongClickListener(new OnItemLongClickListener() {
@@ -66,44 +79,92 @@ public class MainActivity extends Activity {
 			@Override
 			public boolean onItemLongClick(AdapterView<?> parent, View view,
 					int position, long id) {
+				// 弹出框对象
+				final Dialog dog = new Dialog(MainActivity.this);
+
 				View v_menu = inflater.inflate(R.layout.menu_gridview_loupan,
 						null);// 长按击时弹出的菜单对话框
-				LouPan thisLP = (LouPan) loupans.get(position);// 触发本事件的楼盘对象
-
-				// 设置menu中按钮的点击事件
-
+				final LouPan thisLP = (LouPan) loupans.get(position);// 触发本事件的楼盘对象
+				final int index = position;
+				// 设置menu中按钮的点击事件-----------------------------------------
 				// 编辑楼盘的按钮
-				Button btnEditLP = (Button) v_menu.findViewById(R.id.btnEditLP);
-				btnEditLP.setOnClickListener(new View.OnClickListener() {
+				Button itemEditLP = (Button) v_menu
+						.findViewById(R.id.itemEditLP);
+				itemEditLP.setWidth(view.getWidth());
+				itemEditLP.setHeight(view.getHeight() / 3);
+				itemEditLP.setOnClickListener(new View.OnClickListener() {
 
 					@Override
 					public void onClick(View v) {
-
-					
-
+						Toast.makeText(MainActivity.this, "sadas",
+								Toast.LENGTH_SHORT).show();
 
 					}
 				});
 
 				// 删除 楼盘的按钮
-				Button btnDeleteLP = (Button) v_menu
-						.findViewById(R.id.btnDeleteLP);
-				btnDeleteLP.setOnClickListener(new View.OnClickListener() {
+				Button itemDeleteLP = (Button) v_menu
+						.findViewById(R.id.itemDeleteLP);
+				itemDeleteLP.setWidth(view.getWidth());
+				itemDeleteLP.setHeight(view.getHeight() / 3);
+				itemDeleteLP.setOnClickListener(new View.OnClickListener() {
 
 					@Override
 					public void onClick(View v) {
 						// TODO Auto-generated method
 
+						AlertDialog.Builder builder = new Builder(
+								MainActivity.this);
+						builder.setTitle("温馨提示").setMessage("确认删除?");
+						builder.setPositiveButton("确定",
+								new Dialog.OnClickListener() {
+
+									@Override
+									public void onClick(DialogInterface dialog,
+											int which) {
+										// TODO Auto-generated method stub
+										lpdao.delete(
+												"delete from "
+														+ DBColumns.LouPanColumns.TB_NAME
+														+ " where id=?",
+												new String[] { String
+														.valueOf(thisLP.getId()) });
+										// 关闭弹出框，刷新数据显示
+										dog.dismiss();
+										loupans.remove(index);
+										adpter.notifyDataSetChanged();
+
+									}
+								});
+
+						builder.setNeutralButton("取消",
+								new Dialog.OnClickListener() {
+
+									@Override
+									public void onClick(DialogInterface dialog,
+											int which) {
+										// TODO Auto-generated method stub
+
+									}
+								});
+
+						builder.create().show();
 					}
 				});
 
-				// 弹出框对象
-				Dialog dialog = new Dialog(MainActivity.this);
+				// ----------------------------------------------------
+
+				// // 弹出框对象
+				// Dialog dialog = new Dialog(MainActivity.this);
+
+				// 去掉标题，否则会影响高度计算，一定要在setContentView之前调用
+				dog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
 				// 设置弹出框要弹出的视图内容
-				dialog.setContentView(v_menu);
+				dog.setContentView(v_menu);
 
 				// h获取弹出框的窗体对象，可以通过该对象对其参数进行配置，更新弹出窗口的属性(包括作保和宽高)
-				Window dialogWindow = dialog.getWindow();
+				Window dialogWindow = dog.getWindow();
 
 				// 获取窗体参数对象
 				WindowManager.LayoutParams lp = dialogWindow.getAttributes();
@@ -128,28 +189,11 @@ public class MainActivity extends Activity {
 				dialogWindow.setAttributes(lp);
 
 				// 显示弹出窗体
-				dialog.show();
+				dog.show();
 				return false;
 			}
 
 		});
-
-
-		// 设置gratify的单击事件
-		gvLoupan.setOnItemClickListener(new OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
-				LouPan thisLP = (LouPan) loupans.get(position);// 触发本事件的楼盘对象
-				// 点击楼盘后跳转页面到查看楼盘楼栋分布界面
-				Intent intent = new Intent(MainActivity.this,
-						PantoDongActivity.class);
-				intent.putExtra("loupan", thisLP);
-				startActivity(intent);
-			}
-
-		});
-
 
 		btnCreate = (Button) MainActivity.this.findViewById(R.id.btn_create);
 		// 点击创建
@@ -162,14 +206,23 @@ public class MainActivity extends Activity {
 				startActivity(intent);
 			}
 		});
+		
+		btn_search=(Button) MainActivity.this.findViewById(R.id.btn_search);
+		et_loupan_keyword=(EditText) MainActivity.this.findViewById(R.id.et_loupan_keyword);
+		//点击搜索，重新刷新页面
+		btn_search.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {		
+				loupans=lpdao.getLPlistByName(et_loupan_keyword.getText().toString().trim());
+				adpter.notifyDataSetChanged();
+				
+				
+			}
+		});
 	}
 
 	private class MyAdapter extends BaseAdapter {
-
-		public MyAdapter(ArrayList<LouPan> lps) {
-			// TODO Auto-generated constructor stub
-			loupans = lps;
-		}
 
 		@Override
 		public int getCount() {

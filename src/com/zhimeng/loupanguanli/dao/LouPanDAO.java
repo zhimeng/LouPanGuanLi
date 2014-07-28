@@ -115,8 +115,8 @@ public class LouPanDAO {
 		ArrayList<LouPan> lps = new ArrayList<LouPan>();
 		Cursor cs = dbHelper.getReadableDatabase().rawQuery(
 				"select * from " + DBColumns.LouPanColumns.TB_NAME + " where "
-						+ DBColumns.LouPanColumns.NAME + " like '%?%'",
-				new String[] { name });
+						+ DBColumns.LouPanColumns.NAME + " like ?",
+				new String[] { "%" + name + "%" });
 
 		while (cs.moveToNext()) {
 
