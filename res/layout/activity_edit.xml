@@ -3,133 +3,135 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:baselineAligned="false"
-    android:divider="?android:attr/dividerHorizontal"
-    android:orientation="horizontal"
-    android:showDividers="middle" >
+    android:orientation="horizontal" >
 
-    <RelativeLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1" >
+    <android.support.v4.widget.DrawerLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
 
-        <LinearLayout
-            android:id="@+id/ll_show"
+        <RelativeLayout
+            android:id="@+id/rl_loc"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:layout_height="match_parent" >
 
-            <Button
-                android:id="@+id/btn_edit"
+            <ImageView
+                android:id="@+id/imgv_pic"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="编辑楼盘" />
+                android:layout_height="match_parent"
+                android:scaleType="centerInside"
+                android:src="@drawable/pic_default" />
+        </RelativeLayout>
 
-            <TextView
-                android:id="@+id/tv_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="楼盘名称" />
-
-            <TextView
-                android:id="@+id/tv_address"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="楼盘地址" />
-
-            <TextView
-                android:id="@+id/tv_remark"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="备注" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ll_edit"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:visibility="gone" >
-
-            <LinearLayout
-                style="?android:attr/buttonBarStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal" >
-
-                <Button
-                    android:id="@+id/btn_save"
-                    style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="保存" />
-
-                <Button
-                    android:id="@+id/btn_cancel"
-                    style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="取消" />
-            </LinearLayout>
-
-            <LinearLayout
-                style="?android:attr/buttonBarStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal" >
-
-                <Button
-                    android:id="@+id/btn_gallery"
-                    style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="相册" />
-
-                <Button
-                    android:id="@+id/btn_camera"
-                    style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="拍照" />
-            </LinearLayout>
-
-            <EditText
-                android:id="@+id/et_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="楼盘名称" />
-
-            <EditText
-                android:id="@+id/et_address"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="楼盘地址" />
-
-            <EditText
-                android:id="@+id/et_remark"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="备注"
-                android:minHeight="80dp" />
-        </LinearLayout>
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/rl_loc"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="4" >
-
-        <ImageView
-            android:id="@+id/imgv_pic"
-            android:layout_width="match_parent"
+        <RelativeLayout
+            android:layout_width="160dp"
             android:layout_height="match_parent"
-            android:scaleType="centerInside"
-            android:src="@drawable/pic_default" />
-    </RelativeLayout>
+            android:layout_gravity="right"
+            android:background="@android:color/white" >
+
+            <LinearLayout
+                android:id="@+id/ll_show"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <Button
+                    android:id="@+id/btn_edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="编辑楼盘" />
+
+                <TextView
+                    android:id="@+id/tv_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="楼盘名称" />
+
+                <TextView
+                    android:id="@+id/tv_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="楼盘地址" />
+
+                <TextView
+                    android:id="@+id/tv_remark"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="备注" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone" >
+
+                <LinearLayout
+                    style="?android:attr/buttonBarStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+                    <Button
+                        android:id="@+id/btn_save"
+                        style="?android:attr/buttonBarButtonStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="保存" />
+
+                    <Button
+                        android:id="@+id/btn_cancel"
+                        style="?android:attr/buttonBarButtonStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="取消" />
+                </LinearLayout>
+
+                <LinearLayout
+                    style="?android:attr/buttonBarStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+                    <Button
+                        android:id="@+id/btn_gallery"
+                        style="?android:attr/buttonBarButtonStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="相册" />
+
+                    <Button
+                        android:id="@+id/btn_camera"
+                        style="?android:attr/buttonBarButtonStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="拍照" />
+                </LinearLayout>
+
+                <EditText
+                    android:id="@+id/et_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="楼盘名称" />
+
+                <EditText
+                    android:id="@+id/et_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="楼盘地址" />
+
+                <EditText
+                    android:id="@+id/et_remark"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="备注"
+                    android:minHeight="80dp" />
+            </LinearLayout>
+        </RelativeLayout>
+    </android.support.v4.widget.DrawerLayout>
 
 </LinearLayout>

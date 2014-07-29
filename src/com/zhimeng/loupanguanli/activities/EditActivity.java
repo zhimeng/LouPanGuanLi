@@ -103,9 +103,6 @@ public class EditActivity extends Activity {
 				llShow.setVisibility(View.GONE);
 				// 楼盘信息编辑版块滑出
 				llEdit.setVisibility(View.VISIBLE);
-				// etName.setText(louPan.getName());
-				// etAddress.setText(louPan.getAddress());
-				// etRemark.setText(louPan.getRemark());
 				llEdit.startAnimation(slideIn);
 			}
 		});
@@ -131,12 +128,15 @@ public class EditActivity extends Activity {
 				} else {
 					String address = etAddress.getText().toString().trim();
 					String remark = etRemark.getText().toString().trim();
-					// 删除原有图片
-					File f = new File(Config.APP_DIR_PATH + "/"
-							+ louPan.getPicPath());
-					f.delete();
+					// // 删除原有图片
+					// File f = new File(Config.APP_DIR_PATH + "/"
+					// + louPan.getPicPath());
+					// f.delete();
 					// 更新数据库楼盘信息
-					louPan = new LouPan(name, address, remark, newPicPath);
+					louPan.setName(name);
+					louPan.setAddress(address);
+					louPan.setRemark(remark);
+					louPan.setPicPath(newPicPath);
 					louPanDao.update(louPan);
 					// 楼盘信息编辑版块消失
 					llEdit.startAnimation(slidOut);
@@ -203,6 +203,10 @@ public class EditActivity extends Activity {
 			}
 		});
 
+		etName.setText(louPan.getName());
+		etAddress.setText(louPan.getAddress());
+		etRemark.setText(louPan.getRemark());
+
 		imgViewPic.setImageBitmap(BitmapFactory.decodeFile(Config.APP_DIR_PATH
 				+ "/" + louPan.getPicPath()));
 
@@ -214,8 +218,8 @@ public class EditActivity extends Activity {
 			LouDong ld = louDongDao.GetLouDongById(zb.getLoudongId());
 			Button btn = new Button(EditActivity.this);
 			btn.setText(ld.getName() + "#");
-			btn.setTag(1, ld);// Button按键将楼栋信息随身携带
-			btn.setTag(2, zb);// Button将坐标信息随身携带
+			btn.setTag(R.id.tag_loudong, ld);// Button按键将楼栋信息随身携带
+			btn.setTag(R.id.tag_loupan, zb);// Button将坐标信息随身携带
 			rlLoc.addView(btn);
 			RelativeLayout.LayoutParams mParams = (LayoutParams) btn
 					.getLayoutParams();
@@ -233,11 +237,13 @@ public class EditActivity extends Activity {
 
 		@Override
 		public void onClick(View v) {
-			final PopupWindow pw = new PopupWindow();
-			final LouDong ld = (LouDong) v.getTag(1);
-			final ZuoBiao zb = (ZuoBiao) v.getTag(2);
+			final Button zbBtn = (Button) v;
+			final LouDong ld = (LouDong) v.getTag(R.id.tag_loudong);
+			final ZuoBiao zb = (ZuoBiao) v.getTag(R.id.tag_loupan);
 			View contentView = LayoutInflater.from(EditActivity.this).inflate(
 					R.layout.layout_loudong_edit, null);
+			final PopupWindow pw = new PopupWindow(contentView,
+					LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 			final EditText etNumber = (EditText) contentView
 					.findViewById(R.id.et_number);
 			final EditText etName = (EditText) contentView
@@ -295,13 +301,17 @@ public class EditActivity extends Activity {
 						public void onClick(View v) {
 							louDongDao.Delete(ld);
 							zuoBiaoDao.Delete(zb);
-							v.setVisibility(View.GONE);
+							zbBtn.setVisibility(View.GONE);
 							pw.dismiss();
 						}
 					});
 
 			// 点击PopupWindow外部消失
-			pw.setBackgroundDrawable(new BitmapDrawable());
+			pw.update(contentView, LayoutParams.WRAP_CONTENT,
+					LayoutParams.WRAP_CONTENT);
+			pw.setFocusable(true);
+			pw.setBackgroundDrawable(getResources().getDrawable(
+					R.drawable.bg_pop));
 			pw.setOutsideTouchable(true);
 			pw.showAsDropDown(v);
 		}
@@ -322,6 +332,7 @@ public class EditActivity extends Activity {
 
 		@Override
 		public boolean onTouch(View v, MotionEvent event) {
+			// v.performClick();
 			final int X = (int) event.getRawX();
 			final int Y = (int) event.getRawY();
 			// 处理多点触摸
@@ -355,7 +366,7 @@ public class EditActivity extends Activity {
 				break;
 			}
 			rlLoc.invalidate();
-			return true;
+			return false;
 		}
 	}
 
