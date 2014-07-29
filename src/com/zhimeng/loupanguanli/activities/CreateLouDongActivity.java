@@ -130,6 +130,7 @@ public class CreateLouDongActivity extends Activity {
 
 		@Override
 		public boolean onTouch(View v, MotionEvent event) {
+
 			final int X = (int) event.getRawX();
 			final int Y = (int) event.getRawY();
 			// 处理多点触摸

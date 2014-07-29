@@ -5,13 +5,14 @@ import java.util.ArrayList;
 import android.app.Activity;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -40,6 +41,8 @@ public class PantoDongActivity extends Activity {
 	private RelativeLayout rlLoc;
 	private ImageView imgViewPic;
 	private AlwaysMarqueeTextView tvLouPanDetail;
+
+	private PopupWindow mPW;// 用于弹出楼栋详细信息
 
 	private LouPan louPan;// 从主页面跳转过来所带的参数
 	private ArrayList<LouPan> louPanList;// 所有楼盘信息
@@ -148,6 +151,7 @@ public class PantoDongActivity extends Activity {
 					ZuoBiao zb = zbs.get(i);
 					LouDong ld = louDongDao.GetLouDongById(zb.getLoudongId());
 					Button btn = new Button(PantoDongActivity.this);
+					btn.setBackgroundResource(R.drawable.bg_btn_indicate);
 					btn.setText(ld.getName() + "#");
 					btn.setTag(ld);// Button按键将楼栋信息随身携带
 					rlLoc.addView(btn);
@@ -183,12 +187,49 @@ public class PantoDongActivity extends Activity {
 					.valueOf(ld.getSets()));
 			((TextView) contentView.findViewById(R.id.tv_remark)).setText(ld
 					.getRemark());
-			PopupWindow pw = new PopupWindow(contentView,
-					LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+			// 设置PopupWindow的拖动事件
+			contentView.setOnTouchListener(new OnTouchListener() {
+				private int lastX, lastY;
+				private int mScreenX = 0, mScreenY = 0;
+				private int dx, dy;
+
+				@Override
+				public boolean onTouch(View v, MotionEvent event) {
+					/*
+					 * 要使RelativeLayout的拖动事件有效，必须在布局文件中设置以下几个属性
+					 * 1、android:clickable="true" 2、android:focusable="true"
+					 * 3、android:focusableInTouchMode="true"
+					 */
+					// 注意onTouch方法的实现
+					int action = event.getAction();
+					switch (action) {
+					case MotionEvent.ACTION_DOWN:
+						lastX = (int) event.getRawX();
+						lastY = (int) event.getRawY();
+						break;
+					case MotionEvent.ACTION_UP:
+						mScreenX = dx;
+						mScreenY = dy;
+						break;
+					case MotionEvent.ACTION_MOVE:
+						dx = ((int) event.getRawX()) - lastX + mScreenX;
+						dy = ((int) event.getRawY()) - lastY + mScreenY;
+						mPW.update(dx, dy, -1, -1);
+						break;
+					}
+					return false;
+				}
+			});
+			mPW = new PopupWindow(contentView, LayoutParams.WRAP_CONTENT,
+					LayoutParams.WRAP_CONTENT);
 			// 点击PopupWindow外部消失
-			pw.setBackgroundDrawable(new BitmapDrawable());
-			pw.setOutsideTouchable(true);
-			pw.showAsDropDown(v);
+			mPW.setBackgroundDrawable(getResources().getDrawable(
+					R.drawable.bg_pop_up));
+			mPW.setOutsideTouchable(true);
+			// 不知为何设置没有效果
+			mPW.setAnimationStyle(R.style.popwin_anim_style);
+			mPW.showAtLocation(rlLoc, Gravity.NO_GRAVITY, 2, 2);
+			mPW.update();
 		}
 	};
 

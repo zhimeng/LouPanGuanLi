@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content" >
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_pop_up"
+    android:clickable="true"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:padding="3dp" >
 
     <LinearLayout
         android:id="@+id/ll_number"
@@ -12,13 +17,15 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="编号：" />
+            android:text="编号："
+            android:textColor="@android:color/white" />
 
         <EditText
             android:id="@+id/et_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="楼  栋  编  号" />
+            android:text="楼  栋  编  号"
+            android:textColor="@android:color/white" />
     </LinearLayout>
 
     <LinearLayout
@@ -31,13 +38,15 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="名称：" />
+            android:text="名称："
+            android:textColor="@android:color/white" />
 
         <EditText
             android:id="@+id/et_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="楼  栋  名  称" />
+            android:text="楼  栋  名  称"
+            android:textColor="@android:color/white" />
     </LinearLayout>
 
     <LinearLayout
@@ -50,13 +59,15 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="层数：" />
+            android:text="层数："
+            android:textColor="@android:color/white" />
 
         <EditText
             android:id="@+id/et_layers"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="层  数" />
+            android:text="层  数"
+            android:textColor="@android:color/white" />
     </LinearLayout>
 
     <LinearLayout
@@ -69,13 +80,15 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="套数：" />
+            android:text="套数："
+            android:textColor="@android:color/white" />
 
         <EditText
             android:id="@+id/et_sets"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="套  数" />
+            android:text="套  数"
+            android:textColor="@android:color/white" />
     </LinearLayout>
 
     <LinearLayout
@@ -88,13 +101,15 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="备注：" />
+            android:text="备注："
+            android:textColor="@android:color/white" />
 
         <EditText
             android:id="@+id/et_remark"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="备  注" />
+            android:text="备  注"
+            android:textColor="@android:color/white" />
     </LinearLayout>
 
     <LinearLayout
@@ -108,14 +123,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="保存" />
+            android:text="保存"
+            android:textColor="@android:color/white" />
 
         <Button
             android:id="@+id/btn_delete"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="删除" />
+            android:text="删除"
+            android:textColor="@android:color/white" />
     </LinearLayout>
 
 </RelativeLayout>

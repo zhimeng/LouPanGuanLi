@@ -272,7 +272,7 @@ public class MainActivity extends Activity {
 				item_imgPic.setImageBitmap(bm);
 			} else {
 				// 没有楼盘图片就显示默认的图片
-				item_imgPic.setImageResource(R.drawable.noup);
+				item_imgPic.setImageResource(R.drawable.pic_default);
 			}
 
 			// 获取显示楼盘名的item

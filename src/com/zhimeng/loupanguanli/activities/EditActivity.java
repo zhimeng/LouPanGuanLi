@@ -51,6 +51,8 @@ public class EditActivity extends Activity {
 	private RelativeLayout rlLoc;
 	private ImageView imgViewPic;
 
+	// private PopupWindow mPW;// 用于弹出楼栋详细信息
+
 	// 控件从自身底部滑入、滑出动画
 	private Animation slideIn, slidOut;
 
@@ -221,6 +223,7 @@ public class EditActivity extends Activity {
 			ZuoBiao zb = zuoBiaos.get(i);
 			LouDong ld = louDongDao.GetLouDongById(zb.getLoudongId());
 			Button btn = new Button(EditActivity.this);
+			btn.setBackgroundResource(R.drawable.bg_btn_indicate);
 			btn.setText(ld.getName() + "#");
 			btn.setTag(R.id.tag_loudong, ld);// Button按键将楼栋信息随身携带
 			btn.setTag(R.id.tag_loupan, zb);// Button将坐标信息随身携带
@@ -265,6 +268,39 @@ public class EditActivity extends Activity {
 			etLayers.setText(String.valueOf(ld.getLayers()));
 			etSets.setText(String.valueOf(ld.getSets()));
 			etRemark.setText(ld.getRemark());
+			// 设置PopupWindow的拖动事件
+			contentView.setOnTouchListener(new OnTouchListener() {
+				private int lastX, lastY;
+				private int mScreenX = 0, mScreenY = 0;
+				private int dx, dy;
+
+				@Override
+				public boolean onTouch(View v, MotionEvent event) {
+					/*
+					 * 要使RelativeLayout的拖动事件有效，必须在布局文件中设置以下几个属性
+					 * 1、android:clickable="true" 2、android:focusable="true"
+					 * 3、android:focusableInTouchMode="true"
+					 */
+					// 注意onTouch方法的实现
+					int action = event.getAction();
+					switch (action) {
+					case MotionEvent.ACTION_DOWN:
+						lastX = (int) event.getRawX();
+						lastY = (int) event.getRawY();
+						break;
+					case MotionEvent.ACTION_UP:
+						mScreenX = dx;
+						mScreenY = dy;
+						break;
+					case MotionEvent.ACTION_MOVE:
+						dx = ((int) event.getRawX()) - lastX + mScreenX;
+						dy = ((int) event.getRawY()) - lastY + mScreenY;
+						pw.update(dx, dy, -1, -1);
+						break;
+					}
+					return false;
+				}
+			});
 			((Button) contentView.findViewById(R.id.btn_save))
 					.setOnClickListener(new OnClickListener() {
 
@@ -317,9 +353,12 @@ public class EditActivity extends Activity {
 					LayoutParams.WRAP_CONTENT);
 			pw.setFocusable(true);
 			pw.setBackgroundDrawable(getResources().getDrawable(
-					R.drawable.bg_pop));
+					R.drawable.bg_pop_up));
 			pw.setOutsideTouchable(true);
-			pw.showAsDropDown(v);
+			// 不知为何设置没有效果
+			pw.setAnimationStyle(R.style.popwin_anim_style);
+			pw.showAtLocation(rlLoc, Gravity.NO_GRAVITY, 2, 2);
+			pw.update();
 		}
 	};
 
