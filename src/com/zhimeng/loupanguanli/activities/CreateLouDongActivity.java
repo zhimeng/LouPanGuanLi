@@ -91,6 +91,7 @@ public class CreateLouDongActivity extends Activity {
 							remark, louPan.getId());
 					// 楼栋坐标相关信息
 					Button btn = new Button(CreateLouDongActivity.this);
+					btn.setBackgroundResource(R.drawable.bg_btn_indicate);
 					btn.setText(louDong.getName() + "#");
 					rlLoc.addView(btn);
 					RelativeLayout.LayoutParams mParams = (RelativeLayout.LayoutParams) btn
