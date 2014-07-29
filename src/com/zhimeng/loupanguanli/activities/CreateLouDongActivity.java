@@ -1,8 +1,12 @@
 package com.zhimeng.loupanguanli.activities;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
+import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -11,7 +15,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.SlidingDrawer;
 import android.widget.Toast;
 
 import com.zhimeng.loupanguanli.R;
@@ -23,6 +26,7 @@ import com.zhimeng.loupanguanli.entity.LouPan;
 import com.zhimeng.loupanguanli.entity.ZuoBiao;
 
 public class CreateLouDongActivity extends Activity {
+	private DrawerLayout dl;
 	private Button btnCreateLouDong;
 	private EditText etLouDongNumber;
 	private EditText etLouDongName;
@@ -55,6 +59,7 @@ public class CreateLouDongActivity extends Activity {
 
 	// 初始化视图
 	private void initViews() {
+		dl = (DrawerLayout) findViewById(R.id.dl);
 		btnCreateLouDong = (Button) findViewById(R.id.btn_create_loudong);
 		etLouDongNumber = (EditText) findViewById(R.id.et_loudong_number);
 		etLouDongName = (EditText) findViewById(R.id.et_loudong_name);
@@ -105,6 +110,8 @@ public class CreateLouDongActivity extends Activity {
 
 		imgViewPic.setImageBitmap(BitmapFactory.decodeFile(Config.APP_DIR_PATH
 				+ "/" + louPan.getPicPath()));
+
+		dl.openDrawer(Gravity.RIGHT);
 
 	}
 
@@ -167,5 +174,16 @@ public class CreateLouDongActivity extends Activity {
 			b = false;
 		}
 		return b;
+	}
+
+	// 返回键监听
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			startActivity(new Intent(CreateLouDongActivity.this,
+					MainActivity.class));
+			CreateLouDongActivity.this.finish();
+		}
+		return super.onKeyDown(keyCode, event);
 	}
 }

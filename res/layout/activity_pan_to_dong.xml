@@ -6,19 +6,21 @@
     android:orientation="horizontal" >
 
     <android.support.v4.widget.DrawerLayout
+        android:id="@+id/dl"
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
 
         <RelativeLayout
             android:id="@+id/rl_loc"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+            android:layout_height="match_parent"
+            android:background="@android:color/white" >
 
             <ImageView
                 android:id="@+id/imgv_pic"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scaleType="centerInside"
+                android:scaleType="fitCenter"
                 android:src="@drawable/pic_default" />
 
             <com.zhimeng.loupanguanli.widget.AlwaysMarqueeTextView
@@ -41,7 +43,8 @@
         <RelativeLayout
             android:layout_width="160dp"
             android:layout_height="match_parent"
-            android:layout_gravity="right" >
+            android:layout_gravity="right"
+            android:background="@android:color/white" >
 
             <ListView
                 android:id="@+id/lv_loupan_list"

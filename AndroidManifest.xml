@@ -36,6 +36,7 @@
         </activity>
         <activity
             android:name="com.zhimeng.loupanguanli.activities.MainActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="landscape" >
         </activity>
         <activity

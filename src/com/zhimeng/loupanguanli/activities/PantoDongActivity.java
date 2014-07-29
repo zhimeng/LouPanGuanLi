@@ -7,6 +7,8 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -33,6 +35,7 @@ import com.zhimeng.loupanguanli.entity.ZuoBiao;
 import com.zhimeng.loupanguanli.widget.AlwaysMarqueeTextView;
 
 public class PantoDongActivity extends Activity {
+	private DrawerLayout dl;
 	private ListView lvLouPans;
 	private RelativeLayout rlLoc;
 	private ImageView imgViewPic;
@@ -70,6 +73,7 @@ public class PantoDongActivity extends Activity {
 
 	// 初始化视图
 	private void initViews() {
+		dl = (DrawerLayout) findViewById(R.id.dl);
 		lvLouPans = (ListView) findViewById(R.id.lv_loupan_list);
 		rlLoc = (RelativeLayout) findViewById(R.id.rl_loc);
 		imgViewPic = (ImageView) findViewById(R.id.imgv_pic);
@@ -103,6 +107,8 @@ public class PantoDongActivity extends Activity {
 			ZuoBiao zb = zuoBiaos.get(i);
 			LouDong ld = louDongDao.GetLouDongById(zb.getLoudongId());
 			Button btn = new Button(PantoDongActivity.this);
+			btn.setBackgroundResource(R.drawable.bg_btn_indicate);
+			// btn.setTextSize(16.0f);
 			btn.setText(ld.getName() + "#");
 			btn.setTag(ld);// Button按键将楼栋信息随身携带
 			rlLoc.addView(btn);
@@ -155,6 +161,8 @@ public class PantoDongActivity extends Activity {
 				}
 			}
 		});
+
+		dl.openDrawer(Gravity.RIGHT);
 	}
 
 	// 楼栋指示按钮的点击事件

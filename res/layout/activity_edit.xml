@@ -6,6 +6,7 @@
     android:orientation="horizontal" >
 
     <android.support.v4.widget.DrawerLayout
+        android:id="@+id/dl"
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
 

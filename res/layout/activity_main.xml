@@ -1,9 +1,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/rlmain"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rlmain"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-  
     tools:context="com.zhimeng.loupanguanlidemo.activities.MainActivity" >
 
     <RelativeLayout
@@ -46,10 +45,9 @@
         android:layout_height="match_parent"
         android:layout_below="@id/rl"
         android:layout_marginTop="6dp"
-        android:gravity="center"
-        android:numColumns="auto_fit"       
         android:columnWidth="110dp"
-        android:horizontalSpacing="1dp"  
-        />
+        android:gravity="center"
+        android:horizontalSpacing="1dp"
+        android:numColumns="auto_fit" />
 
 </RelativeLayout>

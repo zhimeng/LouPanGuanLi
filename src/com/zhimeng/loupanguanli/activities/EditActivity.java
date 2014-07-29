@@ -3,24 +3,14 @@ package com.zhimeng.loupanguanli.activities;
 import java.io.File;
 import java.util.ArrayList;
 
-import com.zhimeng.loupanguanli.R;
-import com.zhimeng.loupanguanli.config.Config;
-import com.zhimeng.loupanguanli.dao.LouDongDAO;
-import com.zhimeng.loupanguanli.dao.LouPanDAO;
-import com.zhimeng.loupanguanli.dao.ZuoBiaoDAO;
-import com.zhimeng.loupanguanli.entity.LouDong;
-import com.zhimeng.loupanguanli.entity.LouPan;
-import com.zhimeng.loupanguanli.entity.ZuoBiao;
-import com.zhimeng.loupanguanli.util.PhotoRequestUtil;
-import com.zhimeng.loupanguanli.util.StorageUtil;
-import com.zhimeng.loupanguanli.util.UUIDUtil;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
+import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -34,11 +24,24 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
+import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.RelativeLayout.LayoutParams;
+
+import com.zhimeng.loupanguanli.R;
+import com.zhimeng.loupanguanli.config.Config;
+import com.zhimeng.loupanguanli.dao.LouDongDAO;
+import com.zhimeng.loupanguanli.dao.LouPanDAO;
+import com.zhimeng.loupanguanli.dao.ZuoBiaoDAO;
+import com.zhimeng.loupanguanli.entity.LouDong;
+import com.zhimeng.loupanguanli.entity.LouPan;
+import com.zhimeng.loupanguanli.entity.ZuoBiao;
+import com.zhimeng.loupanguanli.util.PhotoRequestUtil;
+import com.zhimeng.loupanguanli.util.StorageUtil;
+import com.zhimeng.loupanguanli.util.UUIDUtil;
 
 public class EditActivity extends Activity {
+	private DrawerLayout dl;
 	private LinearLayout llShow, llEdit;
 	private Button btnEdit;
 	private TextView tvName, tvAddress, tvRemark;
@@ -72,6 +75,7 @@ public class EditActivity extends Activity {
 	}
 
 	private void initViews() {
+		dl = (DrawerLayout) findViewById(R.id.dl);
 		llShow = (LinearLayout) findViewById(R.id.ll_show);
 		llEdit = (LinearLayout) findViewById(R.id.ll_edit);
 		btnEdit = (Button) findViewById(R.id.btn_edit);
@@ -230,6 +234,8 @@ public class EditActivity extends Activity {
 			btn.setOnTouchListener(new MOnTouchListener(zb.getLoupanId(), zb
 					.getLoudongId()));
 		}
+
+		dl.openDrawer(Gravity.RIGHT);
 	}
 
 	// 楼栋指示按钮的点击事件
@@ -413,5 +419,16 @@ public class EditActivity extends Activity {
 			break;
 		}
 		super.onActivityResult(requestCode, resultCode, data);
+	}
+
+	// 返回键监听
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			// 配合MainActivity的singleTask启动模式
+			startActivity(new Intent(EditActivity.this, MainActivity.class));
+			EditActivity.this.finish();
+		}
+		return super.onKeyDown(keyCode, event);
 	}
 }

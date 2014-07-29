@@ -11,10 +11,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Parcelable;
-import android.text.style.RelativeSizeSpan;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,13 +27,10 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.zhimeng.loupanguanli.R;
 import com.zhimeng.loupanguanli.config.Config;
 import com.zhimeng.loupanguanli.dao.LouPanDAO;
-import com.zhimeng.loupanguanli.database.DBColumns;
-import com.zhimeng.loupanguanli.database.DBHelper;
 import com.zhimeng.loupanguanli.entity.LouPan;
 
 public class MainActivity extends Activity {
@@ -293,4 +287,10 @@ public class MainActivity extends Activity {
 
 	}
 
+	@Override
+	protected void onNewIntent(Intent intent) {
+		loupans = lpdao.getAll();
+		adpter.notifyDataSetChanged();
+		super.onNewIntent(intent);
+	}
 }
