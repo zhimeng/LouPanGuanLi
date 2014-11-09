@@ -26,7 +26,7 @@
         <uses-library android:name="android.test.runner" />
 
         <activity
-            android:name="com.zhimeng.loupanguanli.activities.WelcomeActivity"
+            android:name="com.zhimeng.loupanguanli.ui.WelcomeActivity"
             android:screenOrientation="landscape" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -35,25 +35,25 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.zhimeng.loupanguanli.activities.MainActivity"
+            android:name="com.zhimeng.loupanguanli.ui.MainActivity"
             android:launchMode="singleTask"
             android:screenOrientation="landscape" >
         </activity>
         <activity
-            android:name="com.zhimeng.loupanguanli.activities.CreateLouPanActivity"
+            android:name="com.zhimeng.loupanguanli.ui.CreateLouPanActivity"
             android:screenOrientation="landscape"
             android:theme="@android:style/Theme.DeviceDefault.Light.Dialog" >
         </activity>
         <activity
-            android:name="com.zhimeng.loupanguanli.activities.CreateLouDongActivity"
+            android:name="com.zhimeng.loupanguanli.ui.CreateLouDongActivity"
             android:screenOrientation="landscape" >
         </activity>
         <activity
-            android:name="com.zhimeng.loupanguanli.activities.PantoDongActivity"
+            android:name="com.zhimeng.loupanguanli.ui.PantoDongActivity"
             android:screenOrientation="landscape" >
         </activity>
         <activity
-            android:name="com.zhimeng.loupanguanli.activities.EditActivity"
+            android:name="com.zhimeng.loupanguanli.ui.EditActivity"
             android:screenOrientation="landscape" >
         </activity>
     </application>
